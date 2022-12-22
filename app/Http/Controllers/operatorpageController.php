@@ -10,6 +10,7 @@ class operatorpageController extends Controller
     //
 
     public function index(){
+        return view('operatorpage');
 
         if(Auth::user()->hasRole('operator')){
             return view('operatorpage');
