@@ -11,11 +11,13 @@ class adminpageController extends Controller
     
 
     public function index(){
-        return view('adminpage');
+        return view('adminpage'); // this is to make accesing this page easier during devlopment
 
         if(Auth::user()->hasRole('admin')){
             return view('adminpage');
 
+        }else{
+            abort("403");
         }
     }
 }

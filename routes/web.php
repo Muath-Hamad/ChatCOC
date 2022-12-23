@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Http\Controllers;
+
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,20 +24,21 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/admin', function () {
-    return view('adminpage');
-})->middleware(['auth', 'verified'])->name('admin');
+// Route::get('/admin', function () {
+//     return view('adminpage');
+// })->middleware(['auth', 'verified'])->name('admin');
 
-Route::get('/op', function () {
-    return view('operatorpage');
-})->middleware(['auth', 'verified'])->name('operator');
+// Route::get('/op', function () {
+//     return view('operatorpage');
+// })->middleware(['auth', 'verified'])->name('operator');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    //Route::get('/admin', [adminpageController::class, 'index'])->name('admin');
-    //Route::get('/op', [operatorpageController::class, 'index'])->name('operator');
+    Route::get('/admin', [adminpageController::class, 'index'])->name('admin');
+    Route::get('/op', [operatorpageController::class, 'index'])->name('operator');
+    
 });
 
 require __DIR__.'/auth.php';
