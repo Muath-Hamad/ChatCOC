@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Input\Input;
 
 class UserfileController extends Controller
 {
@@ -17,9 +18,17 @@ class UserfileController extends Controller
         # code...
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        # code...
+
+        $request->validate([
+            'userfile' => 'required|mimes:pdf'
+        ]);
+        dd($request->userfile);
+
+
+       // $file = Input::file('path');
+
     }
 
     public function show()
