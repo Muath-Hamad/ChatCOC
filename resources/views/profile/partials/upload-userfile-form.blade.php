@@ -19,15 +19,28 @@
 
 
         <div>
+            @if (isset(Auth::user()->userfile->path) )
+            {{ __('You have a file') }}
+            {{ Auth::user()->userfile->path }}
+
+            @else
             <x-input-label for="name" :value="__('Name')" />
             <input type="file" name="userfile" id="userfile" class="bg-gray-50 border border-gray-300 text-gray-900">
             @error('userfile')
                 <small class="tect-red-500">{{ $message }}</small>
             @enderror
+
+            @endif
+
         </div>
 
         <div class="flex items-center gap-4">
+            @if (isset(Auth::user()->userfile->path) )
+            <x-danger-button>{{ __('Delete') }}</x-danger-button>
+            @else
             <x-primary-button>{{ __('Save') }}</x-primary-button>
+
+            @endif
 
             @if (session('status') === 'profile-updated')
                 <p

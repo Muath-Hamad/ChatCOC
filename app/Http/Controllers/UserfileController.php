@@ -36,7 +36,7 @@ class UserfileController extends Controller
 
         $curruserfile = new userfile();
 
-        $filepath=null;
+        $filepath=false;
         if($request->hasFile('userfile')){
 
             $filepath = $request->file('userfile')->storeAs(
@@ -46,12 +46,11 @@ class UserfileController extends Controller
             );
         }
 
-        if($filepath !== null){
+        if($filepath != false){
         $curruserfile->user_id = $user['id'];
         $curruserfile->path = $filepath;
         $curruserfile->is_processed = false;
         $curruserfile->save();
-
         }
 
 
