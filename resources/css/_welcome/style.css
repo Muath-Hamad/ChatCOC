@@ -1,7 +1,7 @@
 .container {
   margin: 35px auto;
-  height: 92vh;
-  width: 50%;
+  height: 90vh;
+  width: 100%;
 
 }
 
@@ -81,11 +81,12 @@
 .user-message {
   padding: 12px;
   background: #ccc;
-  margin: 5px;
-  width: 30%;
-  /* width: -moz-min-content; */
-  /* width: min-content; */
-  /* width: max-content; */
+  margin: 5px; 
+  max-width: 50%;
+ max-height: min-content;
+ overflow-wrap: break-word;
+   
+   
   border-radius: 10px 3px 10px 10px;
 
 }
@@ -95,5 +96,5 @@
   color: var(--light-color);
   align-self: flex-start;
   float: right;
-  border-radius: 10px 10px 3px 10px;
+  border-radius: 10px  10px  10px 3px;
 }
