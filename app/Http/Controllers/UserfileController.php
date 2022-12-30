@@ -52,7 +52,7 @@ class UserfileController extends Controller
 
         $JSON_to_python = json_encode($data_to_JSON);
         //dd($JSON_to_python);
-        $script_path = app_path() . "\test.py";
+        $script_path =  'G:\test1.py'; // this is a local path for testing
         $command = "python3" . $script_path . $JSON_to_python;
         $process = new Process(['python3' , $script_path ,$JSON_to_python]);
         $process->run();
@@ -60,7 +60,10 @@ class UserfileController extends Controller
         if(!$process->isSuccessful()){
             throw new ProcessFailedException($process);
         }
+        if($process->isSuccessful()){
+            echo 'procces successful';
 
+        }
         dd(json_decode($process->getOutput(),true));
         if($filepath != false){
         $curruserfile->user_id = $user['id'];
