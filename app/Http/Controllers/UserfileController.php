@@ -30,7 +30,7 @@ class UserfileController extends Controller
     {
 
 
-        //dd($request->allFiles());
+
         $request->validate([
             'userfile' => ['required','mimes:pdf','max:10000']
         ]);
@@ -51,8 +51,8 @@ class UserfileController extends Controller
         $data_to_JSON = array("path" => $filepath , "is_processed" => "false");
 
         $JSON_to_python = json_encode($data_to_JSON);
-        //dd($JSON_to_python);
-        $script_path =  'G:\test1.py'; // this is a local path for testing
+
+        $script_path = app_path() . '\python\\' . 'test.py';
         $command = "python3" . $script_path . $JSON_to_python;
         $process = new Process(['python3' , $script_path ,$JSON_to_python]);
         $process->run();
