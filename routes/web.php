@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\ProfileController;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -41,5 +44,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile', [UserfileController::class, 'store'])->name('Userfile.store');
 
 });
+
+// Route::get('/send',function(){
+
+
+
+//         return 'Test response';
+
+// });
+
+Route::post('/send', [chatbotrequestController::class, 'create'])->name('chatbotrequest.create');
 
 require __DIR__.'/auth.php';

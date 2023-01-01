@@ -1,3 +1,5 @@
+import { data } from "jquery";
+
 const chatBody = document.querySelector(".chat-body");
 const txtInput = document.querySelector("#txtInput");
 const send = document.querySelector(".send");
@@ -14,11 +16,37 @@ const renderUserMessage = () => {
   const userInput = txtInput.value;
   renderMessageEle(userInput, "user");
   txtInput.value = "";
+
+// $.get('send' , function(userInput){
+//     console.log(userInput);
+// })
+
+$.ajaxSetup({
+    headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+  });
+//var newdata = "userinput:" + userInput;
+$.ajax({
+    type: "POST",
+    url: "send",
+    data: {newdata : userInput},
+    success: function(data){
+        renderMessageEle(data , "chatbot");
+        console.log(userInput);
+        console.log(data);
+
+    }
+
+});
+
   setTimeout(() => {
     renderChatbotResponse(userInput);
     setScrollPosition();
   }, 600);
 };
+
+
 
 const renderChatbotResponse = (userInput) => {
   const res = getChatbotResponse(userInput);

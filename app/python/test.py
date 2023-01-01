@@ -17,29 +17,32 @@ from scipy.spatial.distance import cosine
 import gensim
 import re
 import spacy
+from scipy.spatial.distance import cosine
+import nltk
+
 
 # Clean/Normalize Arabic Text
 def clean_str(text):
     search = ["أ","إ","آ","ة","_","-","/",".","،"," و "," يا ",'"',"ـ","'","ى","\\",'\n', '\t','"','?','؟','!']
     replace = ["ا","ا","ا","ه"," "," ","","",""," و"," يا","","","","ي","",' ', ' ',' ',' ? ',' ؟ ',' ! ']
-    
+
     #remove tashkeel
     p_tashkeel = re.compile(r'[\u0617-\u061A\u064B-\u0652]')
     text = re.sub(p_tashkeel,"", text)
-    
+
     #remove longation
     p_longation = re.compile(r'(.)\1+')
     subst = r"\1\1"
     text = re.sub(p_longation, subst, text)
-    
+
     text = text.replace('وو', 'و')
     text = text.replace('يي', 'ي')
     text = text.replace('اا', 'ا')
-    
+
     for i in range(0, len(search)):
         text = text.replace(search[i], replace[i])
-    
-    #trim    
+
+    #trim
     text = text.strip()
 
     return text
@@ -52,19 +55,19 @@ def split_digits_and_words(s):
     for c in s:
         if c.isdigit():
             if X ==1 :
-                X = 0 
+                X = 0
                 result.append(" ")
             result.append(int(c))
         else:
             result.append(c)
-            X = 1 
-            
+            X = 1
+
     s = ''.join(str(x) for x in result)
 
     return s
 
 for i in range(len(trylist)):
-    
+
     trylist[i] = split_digits_and_words(trylist[i])
 count = 0
 quList = []
@@ -74,17 +77,16 @@ for i in Qu['سوال']:
         quList.append(a)
         # print(a)
         count+=1
-from scipy.spatial.distance import cosine
-import nltk
+
 
 #Load AraVec
 
 model = gensim.models.Word2Vec.load('./app/python/data/aravec/wikipedia_cbow_100')
-#import Dataset that have synonyms Question about the same thing 
+#import Dataset that have synonyms Question about the same thing
 # A = pd.read_excel('./data/Question.xlsx')
-#converting the Dataframe into list 
-# docs = 
-# this Example of Question came from the user it also should include the name of class but this is how it should looks after cleaning 
+#converting the Dataframe into list
+# docs =
+# this Example of Question came from the user it also should include the name of class but this is how it should looks after cleaning
 
 
 
@@ -93,9 +95,9 @@ model = gensim.models.Word2Vec.load('./app/python/data/aravec/wikipedia_cbow_100
 ###########################################################
 
 
-# this is the input from the user 
+# this is the input from the user
 
-target = "متى هو الموعد  المخصص لاختبار ماده math 115" 
+target = "متى هو الموعد  المخصص لاختبار ماده math 115"
 #spliting the sentence into words
 
 #############################################################
@@ -113,7 +115,7 @@ for j in range(len(quList)):
             wordVec1 += model.wv[ word]
         except:
             continue
-        
+
     wordVec2 = 0
     for i in range(len(sen2)):
         try:
@@ -121,7 +123,7 @@ for j in range(len(quList)):
             wordVec2 += model.wv[ word]
         except:
             continue
-    #finding the cosine similarity of the two sentences 
+    #finding the cosine similarity of the two sentences
     similarity = 1 - cosine(wordVec1, wordVec2)
     if similarity > max :
         max = similarity
