@@ -33,7 +33,7 @@ $.ajax({
     data: {newdata : userInput},
     success: function(data){
         renderMessageEle(data , "chatbot");
-        console.log(userInput);
+
         console.log(data);
 
     }
@@ -41,17 +41,16 @@ $.ajax({
 });
 
   setTimeout(() => {
-    renderChatbotResponse(userInput);
     setScrollPosition();
   }, 600);
 };
 
 
 
-const renderChatbotResponse = (userInput) => {
-  const res = getChatbotResponse(userInput);
-  renderMessageEle(res);
-};
+// const renderChatbotResponse = (userInput) => {
+//   const res = getChatbotResponse(userInput);
+//   renderMessageEle(res);
+// };
 
 const renderMessageEle = (txt, type) => {
   let className = "user-message";
@@ -65,11 +64,11 @@ const renderMessageEle = (txt, type) => {
   chatBody.append(messageEle);
 };
 
-const getChatbotResponse = (userInput) => {
-  return responseObj[userInput] == undefined
-    ? "Please try something else"
-    : responseObj[userInput];
-};
+// const getChatbotResponse = (userInput) => {
+//   return responseObj[userInput] == undefined
+//     ? "Please try something else"
+//     : responseObj[userInput];
+// };
 
 const setScrollPosition = () => {
   if (chatBody.scrollHeight > 0) {
@@ -77,10 +76,10 @@ const setScrollPosition = () => {
   }
 };
 // here the Response function
- const responseObj = {
-   hello: "Hey ! How are you doing ?",
-   hey: "Hey! What's Up",
-   today: new Date().toDateString(),
-   time: new Date().toLocaleTimeString(),
- };
+//  const responseObj = {
+//    hello: "Hey ! How are you doing ?",
+//    hey: "Hey! What's Up",
+//    today: new Date().toDateString(),
+//    time: new Date().toLocaleTimeString(),
+//  };
 
