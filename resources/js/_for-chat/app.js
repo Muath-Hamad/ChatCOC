@@ -1,13 +1,21 @@
-import { data } from "jquery";
-
+// import { data } from "jquery";
+const HelpBody = document.querySelector(".help");
 const chatBody = document.querySelector(".chat-body");
 const txtInput = document.querySelector("#txtInput");
 const send = document.querySelector(".send");
 
-send.addEventListener("click", () => renderUserMessage());
+send.addEventListener("click", () =>
+ {
+
+  renderUserMessage();
+  $(HelpBody).remove();
+  
+  });
 
 txtInput.addEventListener("keyup", (event) => {
+  
   if (event.keyCode === 13) {
+    $(HelpBody).remove();
     renderUserMessage();
   }
 });

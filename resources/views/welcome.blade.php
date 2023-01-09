@@ -68,6 +68,9 @@
   font-size: 36px;
   margin-left: 50px;
 }
+.help{
+  margin: auto;
+}
 
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
@@ -100,7 +103,11 @@
 
         <div class="title">Let's Chat</div>
       </div>
-      <div class="chat-body"></div>
+      <div class="chat-body">
+
+
+      <div class="help">hi</div>
+      </div>
       <div class="chat-input">
         <div class="input-sec ">
           <input type="text" id="txtInput" placeholder="Type here" autofocus />
