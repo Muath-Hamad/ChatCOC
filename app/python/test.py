@@ -47,8 +47,8 @@ def clean_str(text):
     text = text.strip()
 
     return text
-df = pd.read_csv('./app/python/data/class.csv')
-Qu = pd.read_excel('./app/python/data/Question.xlsx')
+df = pd.read_csv('C:/xampp/htdocs/QU-Chatbot/app/python/data/class.csv')
+Qu = pd.read_excel('C:/xampp/htdocs/QU-Chatbot/app/python/data/Question.xlsx')
 trylist = list(df['المقرر'].unique())
 def split_digits_and_words(s):
     result = []
@@ -82,7 +82,7 @@ for i in Qu['سوال']:
 
 #Load AraVec
 
-model = gensim.models.Word2Vec.load('./app/python/data/aravec/wikipedia_cbow_100')
+model = gensim.models.Word2Vec.load('C:/xampp/htdocs/QU-Chatbot/app/python/data/aravec/wikipedia_cbow_100')
 #import Dataset that have synonyms Question about the same thing
 # A = pd.read_excel('./data/Question.xlsx')
 #converting the Dataframe into list
@@ -97,8 +97,11 @@ model = gensim.models.Word2Vec.load('./app/python/data/aravec/wikipedia_cbow_100
 
 
 # this is the input from the user
+passed=sys.argv[1] # this is a system variable where a JSON will be passed from Laravel
 
-target = "متى هو الموعد  المخصص لاختبار ماده math 115"
+# target = "متى هو الموعد  المخصص لاختبار ماده math 115"
+target = "متى هو الموعد  المخصص لاختبار ماده" + passed
+# print(target.encode("utf-8"))
 #spliting the sentence into words
 
 #############################################################
@@ -135,15 +138,16 @@ for j in range(len(quList)):
 
 ## change these two output into json output
 ##################################################
-# print( max1)
+result = "".join(max1)
+print(result.encode("utf-8"))
 
-print( max)
+# print(max)
 
 ##################################################
 
 
 
-# x=sys.argv[1] # this is a system variable where a JSON will be passed from Laravel
+
 # y has sample JSON code that is tested and carries out to laravel if called from there
 
 # y='''

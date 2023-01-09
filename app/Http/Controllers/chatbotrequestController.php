@@ -26,17 +26,18 @@ class chatbotrequestController extends Controller
 
           $userinput= $request->newdata;
 
-          return response($userinput);
+          //return response($userinput);
           $data_to_JSON = array("user_request" => $userinput); // pput input into an array
 
-          $JSON_to_python = json_encode($userinput); // encode array to JSON
+          $JSON_to_python = json_encode($data_to_JSON); // encode array to JSON
 
           $script_path = app_path() . '\python\\' . 'test.py'; // set up chatbot script path
           // $command = "python3" . $script_path . $JSON_to_python;
-          $process = new Process(['python3' , $script_path ,$JSON_to_python]); // prepare process
+          $process = new Process(['C:\Python310\python.exe' , $script_path ,$userinput]); // prepare process
           $process->run(); // excute proccess
 
           if(!$process->isSuccessful()){
+            return response("error");
               throw new ProcessFailedException($process);
           }
               $chatbot_response = $process->getOutput();
