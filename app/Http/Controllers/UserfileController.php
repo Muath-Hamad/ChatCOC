@@ -31,46 +31,48 @@ class UserfileController extends Controller
 
 
 
-        $request->validate([
-            'userfile' => ['required','mimes:pdf','max:10000']
-        ]);
-        $user = Auth::user();
+        // $request->validate([
+        //     'userfile' => ['required','mimes:pdf','max:10000']
+        // ]);
+       // $user = Auth::user();
 
-        $curruserfile = new userfile();
+        //$curruserfile = new userfile();
 
         $filepath=false;
-        if($request->hasFile('userfile')){
+        // if($request->hasFile('userfile')){
 
-            $filepath = $request->file('userfile')->storeAs(
-                'unprocessed_userfiles',
-                Auth::id().'_'. time() .'.'. $request->file('userfile')->getClientOriginalExtension(),
-                'public'
-            );
-        }
+        //     $filepath = $request->file('userfile')->storeAs(
+        //         'unprocessed_userfiles',
+        //         Auth::id().'_'. time() .'.'. $request->file('userfile')->getClientOriginalExtension(),
+        //         'public'
+        //     );
+        // }
 
-        $data_to_JSON = array("path" => $filepath , "is_processed" => "false");
+       // $data_to_JSON = array("path" => $filepath , "is_processed" => "false");
+        $data_to_JSON = array("user_request" => "متى هو الموعد  المخصص لاختبار ماده math 115");
 
-        $JSON_to_python = json_encode($data_to_JSON);
+        $JSON_to_python = json_encode('math 115');
 
         $script_path = app_path() . '\python\\' . 'test.py';
         $command = "python3" . $script_path . $JSON_to_python;
-        $process = new Process(['python3' , $script_path ,$JSON_to_python]);
+        $process = new Process(['C:\Python310\python.exe' , $script_path ,'math 115']);
         $process->run();
 
         if(!$process->isSuccessful()){
             throw new ProcessFailedException($process);
         }
         if($process->isSuccessful()){
-            echo 'procces successful';
+           // echo 'procces successful';
 
         }
-        dd(json_decode($process->getOutput(),true));
-        if($filepath != false){
-        $curruserfile->user_id = $user['id'];
-        $curruserfile->path = $filepath;
-        $curruserfile->is_processed = false;
-        $curruserfile->save();
-        }
+        dd($process->getOutput());
+
+        // if($filepath != false){
+        // $curruserfile->user_id = $user['id'];
+        // $curruserfile->path = $filepath;
+        // $curruserfile->is_processed = false;
+        // $curruserfile->save();
+        // }
 
 
         //dd($user);

@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+#:\Python310 python3.10
+import sys
+import json
+
+>>>>>>> 9c5662f54f9ce9694f1c317bb2f07224d1697db1
 from gensim.models import word2vec
 import tensorflow as tf
 from keras.preprocessing.text import Tokenizer
@@ -14,36 +21,38 @@ from scipy.spatial.distance import cosine
 import gensim
 import re
 import spacy
+from scipy.spatial.distance import cosine
+import nltk
+
 
 # Clean/Normalize Arabic Text
 
 def clean_str(text):
     search = ["أ","إ","آ","ة","_","-","/",".","،"," و "," يا ",'"',"ـ","'","ى","\\",'\n', '\t','"','?','؟','!']
     replace = ["ا","ا","ا","ه"," "," ","","",""," و"," يا","","","","ي","",' ', ' ',' ',' ? ',' ؟ ',' ! ']
-    
+
     #remove tashkeel
     p_tashkeel = re.compile(r'[\u0617-\u061A\u064B-\u0652]')
     text = re.sub(p_tashkeel,"", text)
-    
+
     #remove longation
     p_longation = re.compile(r'(.)\1+')
     subst = r"\1\1"
     text = re.sub(p_longation, subst, text)
-    
+
     text = text.replace('وو', 'و')
     text = text.replace('يي', 'ي')
     text = text.replace('اا', 'ا')
-    
+
     for i in range(0, len(search)):
         text = text.replace(search[i], replace[i])
-    
-    #trim    
+
+    #trim
     text = text.strip()
 
     return text
-Qu = pd.read_excel('./data/Question.xlsx')
-df = pd.read_csv('./data/class.csv')
-st = pd.read_csv('./data/StudentGPA.csv')
+df = pd.read_csv('C:/xampp/htdocs/QU-Chatbot/app/python/data/class.csv')
+Qu = pd.read_excel('C:/xampp/htdocs/QU-Chatbot/app/python/data/Question.xlsx')
 trylist = list(df['المقرر'].unique())
 def split_digits_and_words(s):
     result = []
@@ -51,18 +60,18 @@ def split_digits_and_words(s):
     for c in s:
         if c.isdigit():
             if X ==1 :
-                X = 0 
+                X = 0
                 result.append(" ")
             result.append(int(c))
         else:
             result.append(c)
-            X = 1 
-            
+            X = 1
+
     s = ''.join(str(x) for x in result)
 
     return s
 for i in range(len(trylist)):
-    
+
     trylist[i] = split_digits_and_words(trylist[i])
 count = 0
 quList = []
@@ -72,18 +81,16 @@ for i in Qu['سوال']:
         quList.append(a)
         # print(a)
         count+=1
-li = list(df['المقرر'].unique())
-from scipy.spatial.distance import cosine
-import nltk
+
 
 #Load AraVec
-method = 0
-model = gensim.models.Word2Vec.load('./data/aravec/wikipedia_cbow_100')
-#import Dataset that have synonyms Question about the same thing 
+
+model = gensim.models.Word2Vec.load('C:/xampp/htdocs/QU-Chatbot/app/python/data/aravec/wikipedia_cbow_100')
+#import Dataset that have synonyms Question about the same thing
 # A = pd.read_excel('./data/Question.xlsx')
-#converting the Dataframe into list 
-# docs = 
-# this Example of Question came from the user it also should include the name of class but this is how it should looks after cleaning 
+#converting the Dataframe into list
+# docs =
+# this Example of Question came from the user it also should include the name of class but this is how it should looks after cleaning
 
 
 
@@ -91,6 +98,15 @@ model = gensim.models.Word2Vec.load('./data/aravec/wikipedia_cbow_100')
 target = " اين مكان القاعه CS451" 
 
 
+###########################################################
+
+
+# this is the input from the user
+passed=sys.argv[1] # this is a system variable where a JSON will be passed from Laravel
+
+# target = "متى هو الموعد  المخصص لاختبار ماده math 115"
+target = "متى هو الموعد  المخصص لاختبار ماده" + passed
+# print(target.encode("utf-8"))
 #spliting the sentence into words
 for word in li :
     if word in target:
@@ -98,53 +114,76 @@ for word in li :
         method = 1
         target = target.replace(word, "")
 
-if method ==1 :
-    maxPer = 0
-    maxSen = []
-    for j in range(len(Qu['سوال'])):
-        sen1 = Qu['سوال'][j].split() #taking only the first Question in the list 'اين قاعة'
-        sen2 = target.split()
-        wordVec1 = 0
-        for i in range(len(sen1)):
-            #cleaning the word
-            try:
-                word = clean_str(sen1[i])
-            # adding the vectors of all words
-                wordVec1 += model.wv[ word]
-            except:
-                continue
-            
-        wordVec2 = 0
-        for i in range(len(sen2)):
-            try:
-                word = clean_str(sen2[i])
-                wordVec2 += model.wv[ word]
-            except:
-                continue
-        #finding the cosine similarity of the two sentences 
-        similarity = 1 - cosine(wordVec1, wordVec2)
-        if similarity > maxPer :
-            maxPer = similarity
-            maxSen = sen1
-            seachLoc = j
+#############################################################
+max = 0
+max1 = []
+for j in range(len(quList)):
+    sen1 = quList[j].split() #taking only the first Question in the list 'اين قاعة'
+    sen2 = target.split()
+    wordVec1 = 0
+    for i in range(len(sen1)):
+        #cleaning the word
+        try:
+            word = clean_str(sen1[i])
+        # adding the vectors of all words
+            wordVec1 += model.wv[ word]
+        except:
+            continue
 
-# one of these ifs will be returned to the user 
-    
-if Qu.loc[seachLoc][1] == 1 :
-    # print(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
-    for i in range(len(df[df['المقرر'] == searchItem]['الشعبة'])):
-        print(f" شعبه {list(df[df['المقرر'] == searchItem]['الشعبة'])[i] } في قاعه رقم {list(df[df['المقرر'] == searchItem]['القاعة'])[i]}")
-if Qu.loc[seachLoc][1] == 2 :
-    # print(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
-    print(f"يدرسها {list(df[df['المقرر'] == searchItem]['المحاضر'].unique())}", end=u'', encoding='utf-8')
-
-if Qu.loc[seachLoc][1] == 3 :
-    # print(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
-    for i in range(len(df[df['المقرر'] == searchItem]['الشعبة'])):
-        print(f" شعبه {df[df['المقرر'] == searchItem]['الشعبة'][i] } تبدا من {df[df['المقرر'] == searchItem]['من'][i]} الى {df[df['المقرر'] == searchItem]['الى'][i]}")
-if Qu.loc[seachLoc][1] == 4 :
-    print(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
+    wordVec2 = 0
+    for i in range(len(sen2)):
+        try:
+            word = clean_str(sen2[i])
+            wordVec2 += model.wv[ word]
+        except:
+            continue
+    #finding the cosine similarity of the two sentences
+    similarity = 1 - cosine(wordVec1, wordVec2)
+    if similarity > max :
+        max = similarity
+        max1 = sen1
+    # print(similarity)
 
 
+
+## change these two output into json output
+##################################################
+result = "".join(max1)
+print(result.encode("utf-8"))
+
+# print(max)
+
+##################################################
+
+
+
+
+# y has sample JSON code that is tested and carries out to laravel if called from there
+
+# y='''
+# {
+# "TestArray":[
+#     {
+#     "arg1": "test arg1",
+#     "arg2": "test arg2"
+#     },
+#     {
+#     "arg1": "test arg1",
+#     "arg2": "test arg2"
+#     }
+# ]
+# }
+# '''
+
+
+# data=json.loads(y) # loads method will take in a JSON code and decode it to be loaded in data python variable ..
+                    # data can be many types of variables depending on the passed JSON
+
+# print(json.dumps(data))
+
+# data=json.loads(x) # loads method will take in a JSON code and decode it to be loaded in data python variable ..
+                    # data can be many types of variables depending on the passed JSON
+
+# print(json.dumps(data))
 
 

@@ -3,15 +3,17 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>Laravel | Home</title>
-        
+
          <!-- Bootstrap for "rtl" -->
          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 
         <!-- Fonts -->
         <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
         <!-- Styles -->
         <style>
@@ -21,11 +23,11 @@
 
         <!-- Scripts -->
         @vite(['resources/js/_for-chat/app.js'])
-        
+
 
         <!-- chat body Styles -->
         @vite(['resources/css/_welcome/style.css'])
-        
+
 
         <style>
             body {
@@ -66,6 +68,9 @@
   font-size: 36px;
   margin-left: 50px;
 }
+.help{
+  margin: auto;
+}
 
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
@@ -77,7 +82,7 @@
     <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 @if (Route::has('login'))
-                
+
                     @auth
                         <a href="{{ url('/profile') }}" class="">Profile</a>
                     @else
@@ -87,7 +92,7 @@
                             <a href="{{ route('register') }}" class="">Register</a>
                         @endif
                     @endauth
-                
+
                 @endif
     </div>
     <span style="font-size:30px;cursor:pointer" class="m-3" onclick="openNav()">&#9776; </span>
@@ -95,13 +100,17 @@
 
     <div class="container">
       <div class="chat-header">
-       
+
         <div class="title">Let's Chat</div>
       </div>
-      <div class="chat-body"></div>
+      <div class="chat-body">
+
+
+      <div class="help">hi</div>
+      </div>
       <div class="chat-input">
         <div class="input-sec ">
-          <input type="text" id="txtInput" placeholder="Typ here" autofocus />
+          <input type="text" id="txtInput" placeholder="Type here" autofocus />
         </div>
         <div class="send">
           <!-- <img src="resources/_images/send.svg" alt="send" /> -->
@@ -109,7 +118,7 @@
             <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
             </svg>
             </button>
-         
+
         </div>
       </div>
 

@@ -1,11 +1,21 @@
+// import { data } from "jquery";
+const HelpBody = document.querySelector(".help");
 const chatBody = document.querySelector(".chat-body");
 const txtInput = document.querySelector("#txtInput");
 const send = document.querySelector(".send");
 
-send.addEventListener("click", () => renderUserMessage());
+send.addEventListener("click", () =>
+ {
+
+  renderUserMessage();
+  $(HelpBody).remove();
+  
+  });
 
 txtInput.addEventListener("keyup", (event) => {
+  
   if (event.keyCode === 13) {
+    $(HelpBody).remove();
     renderUserMessage();
   }
 });
@@ -14,16 +24,41 @@ const renderUserMessage = () => {
   const userInput = txtInput.value;
   renderMessageEle(userInput, "user");
   txtInput.value = "";
+
+// $.get('send' , function(userInput){
+//     console.log(userInput);
+// })
+
+$.ajaxSetup({
+    headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+  });
+//var newdata = "userinput:" + userInput;
+$.ajax({
+    type: "POST",
+    url: "send",
+    data: {newdata : userInput},
+    success: function(data){
+        renderMessageEle(data , "chatbot");
+
+        console.log(data);
+
+    }
+
+});
+
   setTimeout(() => {
-    renderChatbotResponse(userInput);
     setScrollPosition();
   }, 600);
 };
 
-const renderChatbotResponse = (userInput) => {
-  const res = getChatbotResponse(userInput);
-  renderMessageEle(res);
-};
+
+
+// const renderChatbotResponse = (userInput) => {
+//   const res = getChatbotResponse(userInput);
+//   renderMessageEle(res);
+// };
 
 const renderMessageEle = (txt, type) => {
   let className = "user-message";
@@ -37,11 +72,11 @@ const renderMessageEle = (txt, type) => {
   chatBody.append(messageEle);
 };
 
-const getChatbotResponse = (userInput) => {
-  return responseObj[userInput] == undefined
-    ? "Please try something else"
-    : responseObj[userInput];
-};
+// const getChatbotResponse = (userInput) => {
+//   return responseObj[userInput] == undefined
+//     ? "Please try something else"
+//     : responseObj[userInput];
+// };
 
 const setScrollPosition = () => {
   if (chatBody.scrollHeight > 0) {
@@ -49,10 +84,10 @@ const setScrollPosition = () => {
   }
 };
 // here the Response function
- const responseObj = {
-   hello: "Hey ! How are you doing ?",
-   hey: "Hey! What's Up",
-   today: new Date().toDateString(),
-   time: new Date().toLocaleTimeString(),
- };
+//  const responseObj = {
+//    hello: "Hey ! How are you doing ?",
+//    hey: "Hey! What's Up",
+//    today: new Date().toDateString(),
+//    time: new Date().toLocaleTimeString(),
+//  };
 
