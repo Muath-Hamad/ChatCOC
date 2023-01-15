@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\chatRequest;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Process\Process;
@@ -26,24 +27,32 @@ class chatbotrequestController extends Controller
 
           $userinput= $request->newdata;
 
-          //return response($userinput);
-          $data_to_JSON = array("user_request" => $userinput); // pput input into an array
-
-          $JSON_to_python = json_encode($data_to_JSON); // encode array to JSON
-
+         //return response($userinput);
+         //$data_to_JSON = array("user_request" => $userinput); // pput input into an array
+         // $JSON_to_python = json_encode($data_to_JSON); // encode array to JSON
           $script_path = app_path() . '\python\\' . 'test.py'; // set up chatbot script path
-          // $command = "python3" . $script_path . $JSON_to_python;
-          $process = new Process(['C:\Python310\python.exe' , $script_path ,$userinput]); // prepare process
-          $process->run(); // excute proccess
 
-          if(!$process->isSuccessful()){
-            return response("error");
-              throw new ProcessFailedException($process);
+
+
+          try{
+            $userinput = mb_convert_encoding($userinput , "UTF-8");
+            $process = new Process(['C:\Python310\python.exe' , $script_path ,$userinput]); // prepare process
+            $process->run(); // excute proccess
+            throw new ProcessFailedException($process);
+
+          }catch(Exception $e){
+            $error_msg = $e->getMessage();
+            return response($error_msg);
           }
-              $chatbot_response = $process->getOutput();
-              return response($chatbot_response);
+          if($process->isSuccessful()){
+            $chatbot_response = $process->getOutput();
+            $chatbot_response = mb_convert_encoding($chatbot_response , "UTF-8");
+            return response($chatbot_response);
 
-          //dd(json_decode($process->getOutput(),true));
+          }
+
+
+
 
         }
 

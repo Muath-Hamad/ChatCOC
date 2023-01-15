@@ -22,6 +22,17 @@ from scipy.spatial.distance import cosine
 import nltk
 
 
+def is_2d_array(obj): # check if given obj is a 2-D array
+    try:
+        iter(obj)
+        if all(map(lambda x: hasattr(x, '__iter__'), obj)):
+            return True
+        else:
+            return False
+    except TypeError:
+        return False
+
+
 # Clean/Normalize Arabic Text
 
 def clean_str(text):
@@ -102,10 +113,12 @@ target = " اين مكان القاعه CS451"
 passed=sys.argv[1] # this is a system variable where a JSON will be passed from Laravel
 
 # target = "متى هو الموعد  المخصص لاختبار ماده math 115"
-target = "متى هو الموعد  المخصص لاختبار ماده" + passed
+#target = "متى هو الموعد  المخصص لاختبار ماده" + passed
+target = passed
+target.encode("UTF-8")
 # print(target.encode("utf-8"))
 #spliting the sentence into words
-for word in li :
+for word in i :
     if word in target:
         searchItem = word
         method = 1
@@ -135,6 +148,16 @@ for j in range(len(quList)):
         except:
             continue
     #finding the cosine similarity of the two sentences
+    # unsucceful attempt to work arround error { ValueError: Input vector should be 1-D }
+    # if is_2d_array(wordVec1):
+    #  con_wordVec1 = wordVec1.flatten()
+    # else:
+    #     con_wordVec1= [wordVec1]
+    # if is_2d_array(wordVec2):
+    #  con_wordVec2 = wordVec2.flatten()
+    # else:
+    #     con_wordVec2= [wordVec2]
+
     similarity = 1 - cosine(wordVec1, wordVec2)
     if similarity > max :
         max = similarity
@@ -146,12 +169,11 @@ for j in range(len(quList)):
 ## change these two output into json output
 ##################################################
 result = "".join(max1)
-print(result.encode("utf-8"))
-
+result.encode("utf-8")
+print(result)
 # print(max)
 
 ##################################################
-
 
 
 
