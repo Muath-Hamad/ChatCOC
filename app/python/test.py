@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-=======
 #:\Python310 python3.10
 import sys
 import json
 
->>>>>>> 9c5662f54f9ce9694f1c317bb2f07224d1697db1
 from gensim.models import word2vec
 import tensorflow as tf
 from keras.preprocessing.text import Tokenizer
@@ -94,8 +91,8 @@ model = gensim.models.Word2Vec.load('C:/xampp/htdocs/QU-Chatbot/app/python/data/
 
 
 
-# this ia the use input 
-target = " اين مكان القاعه CS451" 
+# this ia the use input
+target = " اين مكان القاعه CS451"
 
 
 ###########################################################
