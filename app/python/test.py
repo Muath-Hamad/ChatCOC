@@ -1,6 +1,6 @@
 #:\Python310 python3.10
 import sys
-import json
+
 
 from gensim.models import word2vec
 import tensorflow as tf
@@ -103,7 +103,7 @@ model = gensim.models.Word2Vec.load('C:/xampp/htdocs/QU-Chatbot/app/python/data/
 
 
 # this ia the use input
-target = " اين مكان القاعه CS451"
+# target = " اين مكان القاعه CS451"
 
 
 ###########################################################

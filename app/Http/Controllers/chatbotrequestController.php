@@ -30,7 +30,7 @@ class chatbotrequestController extends Controller
          //return response($userinput);
          //$data_to_JSON = array("user_request" => $userinput); // pput input into an array
          // $JSON_to_python = json_encode($data_to_JSON); // encode array to JSON
-          $script_path = app_path() . '\python\\' . 'test.py'; // set up chatbot script path
+          $script_path = app_path() . '\python\\' . 'chatbot.py'; // set up chatbot script path
 
 
 
