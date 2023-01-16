@@ -28,55 +28,6 @@
         <!-- chat body Styles -->
         @vite(['resources/css/_welcome/style.css'])
 
-
-        <style>
-            body {
-              background-color:#6C6E8c;
-                /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
-                font-family: 'Nunito', sans-serif;
-            }
-            .sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-}
-
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-}
-.help{
-  margin: auto;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-        </style>
     </head>
     <body >
     <div id="mySidenav" class="sidenav">
@@ -84,12 +35,12 @@
                 @if (Route::has('login'))
 
                     @auth
-                        <a href="{{ url('/profile') }}" class="">Profile</a>
+                        <a href="{{ url('/profile') }}" class="">{{trans('in.Profile')}}</a>
                     @else
-                        <a href="{{ route('login') }}" class="">Log in</a>
+                        <a href="{{ route('login') }}" class="">{{trans('in.Log-in')}}</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="">Register</a>
+                            <a href="{{ route('register') }}" class="">{{trans('in.Register')}}</a>
                         @endif
                     @endauth
 
@@ -101,16 +52,16 @@
     <div class="container">
       <div class="chat-header">
 
-        <div class="title">Let's Chat</div>
+        <div class="title"></div>
       </div>
       <div class="chat-body">
 
-
-      <div class="help">hi</div>
+      <!-- {{trans('in.hi')}} -->
+      <div class="help">{{trans('in.hi')}}</div>
       </div>
       <div class="chat-input">
         <div class="input-sec ">
-          <input type="text" id="txtInput" placeholder="Type here" autofocus />
+          <input type="text" id="txtInput" placeholder="  .....اكتب هنا" autofocus />
         </div>
         <div class="send">
           <!-- <img src="resources/_images/send.svg" alt="send" /> -->
