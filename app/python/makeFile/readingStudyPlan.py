@@ -1,30 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# In[16]:
-
-
 import pyarabic.trans
 import pandas as pd
 import numpy as np
 import tabula
 
-
-# In[17]:
-
-
 df = pd.read_csv('../data/class.csv')
 
-
-# In[18]:
-
-
 li = list(df['المقرر'].unique())
-
-
-# In[19]:
-
-
 
 classST = pd.DataFrame(columns=['ماده','متطلب'])
 
@@ -32,29 +15,18 @@ classST = pd.DataFrame(columns=['ماده','متطلب'])
 for value in li:
     classST = classST.append({'ماده': value , "متطلب" :float('nan') }, ignore_index=True)
 
-
-# In[20]:
-
-
 classST['متطلب'].isna().sum()
-
-
-# In[21]:
-
 
 for i in range(classST.shape[0]):
     if 'CS182' == str(classST.loc[i,'ماده']):
         classST.loc[i,'متطلب'] = 'CS181'
 
-# for i in range(classST.shape[0]):
     if 'MATH116' == str(classST.loc[i,'ماده']):
         classST.loc[i,'متطلب'] = 'MATH115'
 
-        
     if 'COE23' == str(classST.loc[i,'ماده']):
         classST.loc[i,'متطلب'] = 'COE121'
 
-        
     if 'CS211' == str(classST.loc[i,'ماده']):
         classST.loc[i,'متطلب'] = 'CS181'
 
@@ -82,8 +54,6 @@ for i in range(classST.shape[0]):
     if 'IC103' == str(classST.loc[i,'ماده']):
         classST.loc[i,'متطلب'] = 'IC101'
 
-
-
     if 'CS315' == str(classST.loc[i,'ماده']):
         classST.loc[i,'متطلب'] = 'CS211'
 
@@ -110,7 +80,6 @@ for i in range(classST.shape[0]):
     if 'CS383' == str(classST.loc[i,'ماده']):
         classST.loc[i,'متطلب'] = 'CS222'
 
-
     if 'MATH314' == str(classST.loc[i,'ماده']):
         classST.loc[i,'متطلب'] = 'MATH212'
 
@@ -135,17 +104,8 @@ for i in range(classST.shape[0]):
     if 'IC104' == str(classST.loc[i,'ماده']):
         classST.loc[i,'متطلب'] = 'IC101'
 
-        
-
-
-# In[22]:
-
 
 classST['متطلب'].isna().sum()
-
-
-# In[24]:
-
 
 classST.to_csv('../data/clPLAN.csv' , index=False)
 
