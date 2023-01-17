@@ -36,7 +36,7 @@ class chatbotrequestController extends Controller
 
           try{
             $userinput = mb_convert_encoding($userinput , "UTF-8");
-            $process = new Process(['C:\Python310\python.exe' , $script_path ,$userinput]); // prepare process
+            $process = new Process(['C:\Python38\python.exe' , $script_path ,$userinput]); // prepare process
             $process->run(); // excute proccess
             throw new ProcessFailedException($process);
 

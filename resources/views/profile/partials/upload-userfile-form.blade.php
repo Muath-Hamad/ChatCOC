@@ -16,7 +16,7 @@
     @if (isset(Auth::user()->userfile->path) )
 
     {{-- this will be shown if user has a file already --}}
-    <form method="post" action="{{ route('Userfile.store') }}" class="mt-6 space-y-6" enctype= multipart/form-data>
+    <form method="post" action="{{ route('Userfile.destroy') }}" class="mt-6 space-y-6" enctype= multipart/form-data>
         <div>
             {{ __('You have a file') }}
             {{ Auth::user()->userfile->path }}
@@ -30,7 +30,7 @@
 
     @else
 
- <form method="post" action="{{ route('Userfile.destroy') }}" class="mt-6 space-y-6" enctype= multipart/form-data>
+ <form method="post" action="{{ route('Userfile.store') }}" class="mt-6 space-y-6" enctype= multipart/form-data>
         @csrf
         {{-- @method('patch') --}}
         {{-- this will be shown if user doesnt have afile uploaded --}}

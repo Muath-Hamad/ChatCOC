@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# coding: utf-8
+# -*- coding: utf-8 -*-
 import sys
 from gensim.models import word2vec
 import tensorflow as tf
@@ -92,8 +92,8 @@ model = gensim.models.Word2Vec.load('C:/xampp/htdocs/QU-Chatbot/app/python/data/
 # this Example of Question came from the user it also should include the name of class but this is how it should looks after cleaning
 
 passed=sys.argv[1] # this is a system variable where a JSON will be passed from Laravel
-
-target = passed
+target= ""
+target = target.join(passed)
 target.encode("UTF-8")
 
 # target = " اين مكان القاعه CS451"
@@ -139,57 +139,65 @@ if method ==1 :
     # print( maxPer)
 # elif method == 0:
 
-if Qu.loc[seachLoc][1] == 1 :
-    # print(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
-    for i in range(len(df[df['المقرر'] == searchItem]['الشعبة'])):
-        print(f" شعبه {list(df[df['المقرر'] == searchItem]['الشعبة'])[i] } في قاعه رقم {list(df[df['المقرر'] == searchItem]['القاعة'])[i]}")
-if Qu.loc[seachLoc][1] == 2 :
-    # print(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
-    print(f"يدرسها {list(df[df['المقرر'] == searchItem]['المحاضر'].unique())}", end=u'', encoding='utf-8')
 
-if Qu.loc[seachLoc][1] == 3 :
-    # print(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
-    for i in range(len(df[df['المقرر'] == searchItem]['الشعبة'])):
-        print(f" شعبه {df[df['المقرر'] == searchItem]['الشعبة'][i] } تبدا من {df[df['المقرر'] == searchItem]['من'][i]} الى {df[df['المقرر'] == searchItem]['الى'][i]}")
-if Qu.loc[seachLoc][1] == 4 :
-    print(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
-if Qu.loc[seachLoc][1] == 5 :
-        for i in range(len(conflict['ماده'])):
-            if str(conflict['ماده'][i]) == str(searchItem):
-                if str(conflict['متطلب'][i]) == 'nan':
-                    print(" نعم يمكنك تنزيل الماده... لايوجد لها متطلب")
-                elif  str(conflict['متطلب'][i]) in list(st['رمز المقرر']) :
-                        print("نعم يمكنك تنزيل الماده")
-                else:
-                    print("لا يمكنك")
+# with open("text.txt", "w", encoding="utf-8") as f:
+#     f.write(target)
 
 
-# def print_string(string):
-#     string.encode("UTF-8")
-#     print(string)
-
-# response = ""
 # if Qu.loc[seachLoc][1] == 1 :
+#     # print(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
 #     for i in range(len(df[df['المقرر'] == searchItem]['الشعبة'])):
-#         response = response.join(f" شعبه {list(df[df['المقرر'] == searchItem]['الشعبة'])[i] } في قاعه رقم {list(df[df['المقرر'] == searchItem]['القاعة'])[i]}")
-#         print_string(response)
+#         print(f" شعبه {list(df[df['المقرر'] == searchItem]['الشعبة'])[i] } في قاعه رقم {list(df[df['المقرر'] == searchItem]['القاعة'])[i]}")
 # if Qu.loc[seachLoc][1] == 2 :
-#     print_string(f"يدرسها {list(df[df['المقرر'] == searchItem]['المحاضر'].unique())}", end=u'', encoding='utf-8')
+#     # print(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
+#     print(f"يدرسها {list(df[df['المقرر'] == searchItem]['المحاضر'].unique())}", end=u'', encoding='utf-8')
 
 # if Qu.loc[seachLoc][1] == 3 :
+#     # print(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
 #     for i in range(len(df[df['المقرر'] == searchItem]['الشعبة'])):
-#         print_string(f" شعبه {df[df['المقرر'] == searchItem]['الشعبة'][i] } تبدا من {df[df['المقرر'] == searchItem]['من'][i]} الى {df[df['المقرر'] == searchItem]['الى'][i]}")
+#         print(f" شعبه {df[df['المقرر'] == searchItem]['الشعبة'][i] } تبدا من {df[df['المقرر'] == searchItem]['من'][i]} الى {df[df['المقرر'] == searchItem]['الى'][i]}")
 # if Qu.loc[seachLoc][1] == 4 :
-#     print_string(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
+#     print(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
 # if Qu.loc[seachLoc][1] == 5 :
 #         for i in range(len(conflict['ماده'])):
 #             if str(conflict['ماده'][i]) == str(searchItem):
 #                 if str(conflict['متطلب'][i]) == 'nan':
-#                     print_string(" نعم يمكنك تنزيل الماده... لايوجد لها متطلب")
+#                     print(" نعم يمكنك تنزيل الماده... لايوجد لها متطلب")
 #                 elif  str(conflict['متطلب'][i]) in list(st['رمز المقرر']) :
-#                         print_string("نعم يمكنك تنزيل الماده")
+#                         print("نعم يمكنك تنزيل الماده")
 #                 else:
-#                     print_string("لا يمكنك")
+#                     print("لا يمكنك")
+
+
+def print_string(string):
+    # string.encode("UTF-8")
+    # print(string)
+
+    with open("text.txt", "w", encoding="utf-8") as f:
+     f.write(string)
+
+response = ""
+if Qu.loc[seachLoc][1] == 1 :
+    for i in range(len(df[df['المقرر'] == searchItem]['الشعبة'])):
+        response = response.join(f" شعبه {list(df[df['المقرر'] == searchItem]['الشعبة'])[i] } في قاعه رقم {list(df[df['المقرر'] == searchItem]['القاعة'])[i]}")
+        print_string(response)
+if Qu.loc[seachLoc][1] == 2 :
+    print_string(f"يدرسها {list(df[df['المقرر'] == searchItem]['المحاضر'].unique())}")
+
+if Qu.loc[seachLoc][1] == 3 :
+    for i in range(len(df[df['المقرر'] == searchItem]['الشعبة'])):
+        print_string(f" شعبه {df[df['المقرر'] == searchItem]['الشعبة'][i] } تبدا من {df[df['المقرر'] == searchItem]['من'][i]} الى {df[df['المقرر'] == searchItem]['الى'][i]}")
+if Qu.loc[seachLoc][1] == 4 :
+    print_string(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
+if Qu.loc[seachLoc][1] == 5 :
+        for i in range(len(conflict['ماده'])):
+            if str(conflict['ماده'][i]) == str(searchItem):
+                if str(conflict['متطلب'][i]) == 'nan':
+                    print_string(" نعم يمكنك تنزيل الماده... لايوجد لها متطلب")
+                elif  str(conflict['متطلب'][i]) in list(st['رمز المقرر']) :
+                        print_string("نعم يمكنك تنزيل الماده")
+                else:
+                    print_string("لا يمكنك")
 
 
 

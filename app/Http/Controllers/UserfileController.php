@@ -57,12 +57,13 @@ class UserfileController extends Controller
 
     try{
 
-        $process = new Process(['C:\Python310\python.exe' , $script_path ,$filename]);
+        $process = new Process(['C:\Python38\python.exe' , $script_path ,$filename]);
         $process->run();
 
         throw new ProcessFailedException($process);
     }catch(Exception $e){
         $error_msg = $e->getMessage();
+        echo 'failed';
         dd($error_msg);
     }
         if($process->isSuccessful()){
@@ -74,6 +75,8 @@ class UserfileController extends Controller
          $curruserfile->is_processed = true;
          $curruserfile->save();
 
+        }else{
+            echo 'failed';
         }
 
 
