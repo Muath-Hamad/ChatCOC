@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# coding: utf-8
 import sys
 from gensim.models import word2vec
 import tensorflow as tf
@@ -42,10 +44,10 @@ def clean_str(text):
     text = text.strip()
 
     return text
-Qu = pd.read_excel('./data/Question.xlsx')
-df = pd.read_csv('./data/class.csv')
-st = pd.read_csv('./data/StudentGPA.csv')
-conflict = pd.read_csv('./data/clPLAN.csv')
+Qu = pd.read_excel('C:/xampp/htdocs/QU-Chatbot/app/python/data/Question.xlsx')
+df = pd.read_csv('C:/xampp/htdocs/QU-Chatbot/app/python/data/class.csv')
+st = pd.read_csv('C:/xampp/htdocs/QU-Chatbot/app/python/data/StudentGPA.csv')
+conflict = pd.read_csv('C:/xampp/htdocs/QU-Chatbot/app/python/data/clPLAN.csv')
 
 
 trylist = list(df['المقرر'].unique())
@@ -82,7 +84,7 @@ import nltk
 
 #Load AraVec
 method = 0
-model = gensim.models.Word2Vec.load('./data/aravec/wikipedia_cbow_100')
+model = gensim.models.Word2Vec.load('C:/xampp/htdocs/QU-Chatbot/app/python/data/aravec/wikipedia_cbow_100')
 #import Dataset that have synonyms Question about the same thing
 # A = pd.read_excel('./data/Question.xlsx')
 #converting the Dataframe into list
