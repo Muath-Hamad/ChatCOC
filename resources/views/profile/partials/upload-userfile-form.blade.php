@@ -13,34 +13,39 @@
         @csrf
     </form>
 
+    @if (isset(Auth::user()->userfile->path) )
+
+    {{-- this will be shown if user has a file already --}}
     <form method="post" action="{{ route('Userfile.store') }}" class="mt-6 space-y-6" enctype= multipart/form-data>
-        @csrf
-        {{-- @method('patch') --}}
-
-
         <div>
-            @if (isset(Auth::user()->userfile->path) )
             {{ __('You have a file') }}
             {{ Auth::user()->userfile->path }}
 
-            @else
+        </div>
+        <div class="flex items-center gap-4">
+            <x-danger-button>{{ __('Delete') }}</x-danger-button>
+
+        </div>
+    </form>
+
+    @else
+
+ <form method="post" action="{{ route('Userfile.destroy') }}" class="mt-6 space-y-6" enctype= multipart/form-data>
+        @csrf
+        {{-- @method('patch') --}}
+        {{-- this will be shown if user doesnt have afile uploaded --}}
+
+        <div>
             <x-input-label for="name" :value="__('Name')" />
             <input type="file" name="userfile" id="userfile" class="bg-gray-50 border border-gray-300 text-gray-900">
             @error('userfile')
                 <small class="tect-red-500">{{ $message }}</small>
             @enderror
-
-            @endif
-
         </div>
 
         <div class="flex items-center gap-4">
-            @if (isset(Auth::user()->userfile->path) )
-            <x-danger-button>{{ __('Delete') }}</x-danger-button>
-            @else
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
-            @endif
 
             @if (session('status') === 'profile-updated')
                 <p
@@ -53,4 +58,7 @@
             @endif
         </div>
     </form>
+    @endif
+
+
 </section>
