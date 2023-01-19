@@ -17,6 +17,17 @@ from scipy.spatial.distance import cosine
 import gensim
 import re
 import spacy
+import mysql.connector
+from mysql.connector import Error
+
+# prepare passed data
+u_req=sys.argv[1] # User request to Chabot
+target= ""
+target = target.join(u_req)
+target.encode("UTF-8")
+
+req_id = int(sys.argv[2]) # current request id in DB
+
 
 # Clean/Normalize Arabic Text
 
@@ -91,11 +102,6 @@ model = gensim.models.Word2Vec.load('C:/xampp/htdocs/QU-Chatbot/app/python/data/
 # docs =
 # this Example of Question came from the user it also should include the name of class but this is how it should looks after cleaning
 
-passed=sys.argv[1] # this is a system variable where a JSON will be passed from Laravel
-target= ""
-target = target.join(passed)
-target.encode("UTF-8")
-
 # target = " اين مكان القاعه CS451"
 #spliting the sentence into words
 for word in li :
@@ -169,35 +175,61 @@ if method ==1 :
 #                     print("لا يمكنك")
 
 
-def print_string(string):
-    # string.encode("UTF-8")
-    # print(string)
+def update_DB(string):
+    # Connect to the database
+    try:
+        cnx = mysql.connector.connect(user='root',
+                              password='',
+                              host='127.0.0.1',
+                              database='chatbot')
 
-    with open("text.txt", "w", encoding="utf-8") as f:
-     f.write(string)
+        cursor = cnx.cursor()
+        # prepare query statement with placeholders
+        query = "UPDATE chat_requests SET cr_content = %s WHERE id = %s"
+        # excute query with parameters
+        cursor.execute(query, (string, req_id))
+        # commit the changes
+        cnx.commit()
+    except Error as e:
+        return "error while connction to DB :" +str(e)
+    finally:
+        # close cursor and connection
+        if(cnx.is_connected()):
+            cursor.close()
+            cnx.close()
+        return ""
+
+
+
 
 response = ""
 if Qu.loc[seachLoc][1] == 1 :
     for i in range(len(df[df['المقرر'] == searchItem]['الشعبة'])):
-        response = response.join(f" شعبه {list(df[df['المقرر'] == searchItem]['الشعبة'])[i] } في قاعه رقم {list(df[df['المقرر'] == searchItem]['القاعة'])[i]}")
-        print_string(response)
+        response = str(f" شعبه {list(df[df['المقرر'] == searchItem]['الشعبة'])[i] } في قاعه رقم {list(df[df['المقرر'] == searchItem]['القاعة'])[i]}")
+        update_DB(response)
 if Qu.loc[seachLoc][1] == 2 :
-    print_string(f"يدرسها {list(df[df['المقرر'] == searchItem]['المحاضر'].unique())}")
+    response = str(f"يدرسها {list(df[df['المقرر'] == searchItem]['المحاضر'].unique())}")
+    update_DB(response)
 
 if Qu.loc[seachLoc][1] == 3 :
     for i in range(len(df[df['المقرر'] == searchItem]['الشعبة'])):
-        print_string(f" شعبه {df[df['المقرر'] == searchItem]['الشعبة'][i] } تبدا من {df[df['المقرر'] == searchItem]['من'][i]} الى {df[df['المقرر'] == searchItem]['الى'][i]}")
+        response = str(f" شعبه {df[df['المقرر'] == searchItem]['الشعبة'][i] } تبدا من {df[df['المقرر'] == searchItem]['من'][i]} الى {df[df['المقرر'] == searchItem]['الى'][i]}")
+        update_DB(response)
 if Qu.loc[seachLoc][1] == 4 :
-    print_string(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
+    response = str(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
+    update_DB(response)
 if Qu.loc[seachLoc][1] == 5 :
         for i in range(len(conflict['ماده'])):
             if str(conflict['ماده'][i]) == str(searchItem):
                 if str(conflict['متطلب'][i]) == 'nan':
-                    print_string(" نعم يمكنك تنزيل الماده... لايوجد لها متطلب")
+                    response = str(" نعم يمكنك تنزيل الماده... لايوجد لها متطلب")
+                    update_DB(response)
                 elif  str(conflict['متطلب'][i]) in list(st['رمز المقرر']) :
-                        print_string("نعم يمكنك تنزيل الماده")
+                        response = str("نعم يمكنك تنزيل الماده")
+                        update_DB(response)
                 else:
-                    print_string("لا يمكنك")
+                    response = str("لا يمكنك")
+                    update_DB(response)
 
 
 

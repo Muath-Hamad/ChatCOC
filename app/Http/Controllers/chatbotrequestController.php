@@ -31,7 +31,7 @@ class chatbotrequestController extends Controller
           $userinput= $request->newdata;
 
           // Request Logging ---
-            if($userinput->trim() != ""){ // verify that user input is not empty
+             // verify that user input is not empty
 
             $reqlog = new chatRequest();
             $reqlog -> user_id = $user_id;
@@ -41,26 +41,28 @@ class chatbotrequestController extends Controller
             $reqlog -> save();
 
             $req_id = $reqlog->id; // assign the added instance id to $req_id
-            }
+
          //return response($userinput);
           $script_path = app_path() . '\python\\' . 'chatbot.py'; // set up chatbot script path
-          try{
+
             $userinput = mb_convert_encoding($userinput , "UTF-8"); // encode $userinput to UTF-8
 
             if($req_id != -1){ // ensure that instance was saved to DB
                 $process = new Process(['C:\Python38\python.exe' , $script_path ,$userinput , $req_id]); // prepare process
                 $process->run(); // excute proccess
-                throw new ProcessFailedException($process); }
-          }catch(Exception $e){
-            $error_msg = $e->getMessage();
-            $process_succesful = false;
-            return response($error_msg);
-          }
+
+                if($process->getOutput()== ""){
+                    $process_succesful =true;
+                }else{
+                    $process_succesful =false;
+                    return response($process->getOutput());
+                }
+                 }
 
           if($process_succesful && $req_id != -1){ // ensure that process is succesful & and the instance was created for the request
             $result = chatRequest::find($req_id);
             $chatbot_response = $result->cr_content;
-            $chatbot_response = mb_convert_encoding($chatbot_response , "UTF-8");
+            //$chatbot_response = mb_convert_encoding($chatbot_response , "UTF-8");
             return response($chatbot_response);
           }
         }
