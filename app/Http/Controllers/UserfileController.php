@@ -109,14 +109,12 @@ class UserfileController extends Controller
         $instance -> delete();
 
         // delete the file from storage
-        $file_name = 'unprocessed_userfiles/'.$file_name;
+        $file_name = 'processed_userfiles/'.$file_name;
         try {
             Storage::delete($file_name);
-            session()->flash('success', 'File deleted successfully.');
-            return redirect()->back();
+            return redirect()->route('profile')->with('success', 'File deleted successfully');
         } catch (\Exception $e) {
-            session()->flash('error', 'An error occurred while deleting the file.');
-            return redirect()->back();
+            return redirect()->route('admin')->with('failed', 'File deletion failed !');
         }
 
     }

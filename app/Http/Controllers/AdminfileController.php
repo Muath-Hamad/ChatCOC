@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\adminfile;
 use Exception;
 use Illuminate\Support\Facades\Storage;
@@ -11,7 +12,7 @@ use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
-class AdminfileController extends Controller
+class AdminfController extends Controller
 {
     //
     public function index()
@@ -28,30 +29,30 @@ class AdminfileController extends Controller
     {
 
         $request->validate([
-            'adminfile' => ['required','mimes:pdf','max:10000']
+            'adminf' => ['required','mimes:pdf','max:10000']
         ]);
         $user = Auth::user();
 
 
-        $curradminfile = new adminfile();
+        $curradminf = new adminfile();
 
-        if($request->hasFile('adminfile')){
+        if($request->hasf('adminf')){
 
-            $filename = Auth::id().'_'. time();
-            $extension = $request->file('adminfile')->getClientOriginalExtension();
-            $namewithext = $filename . '.'.$extension;
-            $request->file('adminfile')->storeAs(
-                'unprocessed_adminfiles',
+            $fname = Auth::id().'_'. time();
+            $extension = $request->f('adminf')->getClientOriginalExtension();
+            $namewithext = $fname . '.'.$extension;
+            $request->f('adminf')->storeAs(
+                'unprocessed_adminfs',
                 $namewithext,
                 'public'
             );
         }
 
-        $script_path = app_path() . '\python\\' . '\makeFile\\'.'readpdf.py'; // set up readpdf script path
+        $script_path = app_path() . '\python\\' . '\makef\\'.'readpdf.py'; // set up readpdf script path
 
         try{
 
-            $process = new Process(['C:\Python38\python.exe' , $script_path ,$filename]);
+            $process = new Process(['C:\Python38\python.exe' , $script_path ,$fname]);
             $process->run();
 
             throw new ProcessFailedException($process);
@@ -65,12 +66,12 @@ class AdminfileController extends Controller
             echo 'procces successful';
 
 
-            $curradminfile->user_id = $user['id'];
-            $curradminfile->path = $namewithext; // save the file name with extension
-            $curradminfile->is_processed = true;
-            $curradminfile->is_excel = false;
-            $curradminfile->is_schedule = true;
-            $curradminfile->save();
+            $curradminf->user_id = $user['id'];
+            $curradminf->path = $namewithext; // save the f name with extension
+            $curradminf->is_processed = true;
+            $curradminf->is_excel = false;
+            $curradminf->is_schedule = true;
+            $curradminf->save();
 
             }else{
                  echo 'failed';
@@ -93,8 +94,24 @@ class AdminfileController extends Controller
         # code...
     }
 
-    public function destroy()
+    public function destroy(adminfile $f)
     {
         # code...
+        echo 'test';
+        $f_name = $f -> path;
+        $f ->forceDelete();
+         return redirect()->route('admin')->with('success', 'f deleted successfully');
+         // delete the f from storage
+         $f_name = 'processed_adminfs/'.$f_name;
+         try {
+             Storage::delete($f_name);
+             return redirect()->route('admin')->with('success', 'f deleted successfully');
+
+         } catch (\Exception $e) {
+
+            return redirect()->route('admin')->with('failed', 'f deletion failed !');
+         }
+
+
     }
 }

@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col col-md-6"> <b>Chatbot files</b></div>
             <div class="col col-md-6">
-                <a href="{{ route('Adminfile.store') }}" class="btn btn-success btn-sm float-end">New</a>
+                {{-- <a href="{{ route('Adminfile.store') }}" class="btn btn-success btn-sm float-end">New</a> --}}
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
                     <td>{{ $row->created_at }}</td>
                     <td>{{ $row->user_id }}</td>
                     <td>
-                        <form method="POST" action="{{ route('Adminfile.destroy', $row->id) }}">
+                        <form method="post" action="{{ route('adminfile.destroy', $row->id) }}">
                         @csrf
                         @method('DELETE')
                         <input type="submit" class="btn btn-danger btn-sm" value="Delete"/>
