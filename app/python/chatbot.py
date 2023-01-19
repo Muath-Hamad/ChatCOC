@@ -25,7 +25,7 @@ u_req=sys.argv[1] # User request to Chabot
 target= ""
 target = target.join(u_req)
 target.encode("UTF-8")
-
+target = target.upper()
 req_id = int(sys.argv[2]) # current request id in DB
 
 
@@ -94,6 +94,7 @@ from scipy.spatial.distance import cosine
 import nltk
 
 #Load AraVec
+searchItem = ""
 method = 0
 model = gensim.models.Word2Vec.load('C:/xampp/htdocs/QU-Chatbot/app/python/data/aravec/wikipedia_cbow_100')
 #import Dataset that have synonyms Question about the same thing
@@ -213,7 +214,7 @@ if Qu.loc[seachLoc][1] == 2 :
 
 if Qu.loc[seachLoc][1] == 3 :
     for i in range(len(df[df['المقرر'] == searchItem]['الشعبة'])):
-        response = str(f" شعبه {df[df['المقرر'] == searchItem]['الشعبة'][i] } تبدا من {df[df['المقرر'] == searchItem]['من'][i]} الى {df[df['المقرر'] == searchItem]['الى'][i]}")
+        response = str(f" شعبه {list(df[df['المقرر'] == searchItem]['الشعبة'])[i] } يوم {list(df[df['المقرر'] == searchItem]['الايام'])[i] } تبدا من {list(df[df['المقرر'] == searchItem]['من'])[i]} الى {list(df[df['المقرر'] == searchItem]['الى'])[i]}")
         update_DB(response)
 if Qu.loc[seachLoc][1] == 4 :
     response = str(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")

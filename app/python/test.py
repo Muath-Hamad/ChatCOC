@@ -114,7 +114,9 @@ passed=sys.argv[1] # this is a system variable where a JSON will be passed from 
 
 # target = "متى هو الموعد  المخصص لاختبار ماده math 115"
 #target = "متى هو الموعد  المخصص لاختبار ماده" + passed
+searchItem = ""
 target = passed
+target = target.upper()
 target.encode("UTF-8")
 # print(target.encode("utf-8"))
 #spliting the sentence into words
