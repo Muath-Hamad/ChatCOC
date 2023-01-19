@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\userfile;
 use Exception;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Input\Input;
@@ -41,10 +42,12 @@ class UserfileController extends Controller
 
         if($request->hasFile('userfile')){
 
-            $filename = Auth::id().'_'. time() .'.'. $request->file('userfile')->getClientOriginalExtension();
+            $filename = Auth::id().'_'. time();
+            $extension = $request->file('userfile')->getClientOriginalExtension();
+            $namewithext = $filename . '.'.$extension;
             $request->file('userfile')->storeAs(
                 'unprocessed_userfiles',
-                 $filename,
+                $namewithext,
                 'public'
             );
         }
@@ -53,25 +56,25 @@ class UserfileController extends Controller
 
 
 
-    $script_path = app_path() . '\python\\' . '\makeFile\\'.'ReadingStudentGPA.py'; // set up ReadingStudentGPA script path
+        $script_path = app_path() . '\python\\' . '\makeFile\\'.'ReadingStudentGPA.py'; // set up ReadingStudentGPA script path
 
-    try{
+        try{
 
         $process = new Process(['C:\Python38\python.exe' , $script_path ,$filename]);
         $process->run();
 
         throw new ProcessFailedException($process);
-    }catch(Exception $e){
+        }catch(Exception $e){
         $error_msg = $e->getMessage();
         echo 'failed';
         dd($error_msg);
-    }
+        }
         if($process->isSuccessful()){
            echo 'procces successful';
 
 
          $curruserfile->user_id = $user['id'];
-         $curruserfile->path = $filename;
+         $curruserfile->path = $namewithext; // save the file name with extension
          $curruserfile->is_processed = true;
          $curruserfile->save();
 
@@ -100,6 +103,22 @@ class UserfileController extends Controller
     public function destroy()
     {
         # code...
+        $fileid = Auth::user()->userfile->id; // find the user's user id
+        $instance = userfile::find($fileid); // find the user file instance
+        $file_name = $instance -> path; // save file name to delete it from storage
+        $instance -> delete();
+
+        // delete the file from storage
+        $file_name = 'unprocessed_userfiles/'.$file_name;
+        try {
+            Storage::delete($file_name);
+            session()->flash('success', 'File deleted successfully.');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            session()->flash('error', 'An error occurred while deleting the file.');
+            return redirect()->back();
+        }
+
     }
 
 }

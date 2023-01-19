@@ -17,7 +17,7 @@ passed=sys.argv[1] # passed will have the file name that will be processed
 # "../data/StudentGPA.pdf" , ../data/StudentGPA.csv
 
 # set prefix path to file and append file name to the tail of the string
-inputtargetpath = "C:/xampp/htdocs/QU-Chatbot/storage/app/public/unprocessed_userfiles/" + passed
+inputtargetpath = "C:/xampp/htdocs/QU-Chatbot/storage/app/public/unprocessed_userfiles/" + passed + ".pdf"
 outputtargetpath = "C:/xampp/htdocs/QU-Chatbot/storage/app/public/processed_userfiles/" + passed + ".csv"
 
 tabula.convert_into(inputtargetpath , outputtargetpath, output_format="csv", pages='all')
