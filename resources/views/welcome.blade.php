@@ -57,8 +57,23 @@
       <div class="chat-body">
 
       <!-- {{trans('in.hi')}} -->
-      <div class="help">{{trans('in.hi')}}</div>
+      <div class="help">
+        <div>
+<div id="elem" class="row">
+  <div id="val" class="col-lg-3 col-md-12">{{trans('in.hi')}}</div>
+  <div id="val" class="col-lg-3 col-md-12" >{{trans('in.hi')}}</div>
+  <div id="val" class="col-lg-3 col-md-12">{{trans('in.hi')}}</div>
+  <div id="val" class="col-lg-3 col-md-12">{{trans('in.hi')}}</div>
+  <div id="val" class="col-lg-3 col-md-12">{{trans('in.hi')}}</div>
+  <div id="val" class="col-lg-3 col-md-12">{{trans('in.hi')}}</div>
+  </div>
       </div>
+    </div>
+      
+    
+    
+    
+    </div>
       <div class="chat-input">
         <div class="input-sec ">
           <input type="text" id="txtInput" placeholder="  .....اكتب هنا" autofocus />

@@ -9,6 +9,10 @@ return [
    'Remember' => 'Remember me',
    'Forgot' => 'Forgot your password?',
    'Email'=> 'Email',
-   'Password'=>'Password'
+   'Password'=>'Password',
+   'CPassword'=>'Confirm Password',
+   'Name' =>'Name',
+   'Already' => 'Already Registerd?',
+   'Register' => 'Register'
 
 ];

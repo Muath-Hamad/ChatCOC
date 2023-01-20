@@ -6,6 +6,16 @@ body {
     /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
     font-family: 'Nunito', sans-serif;
 } 
+#elem{
+  margin: 6px;
+}
+#val{
+  /* background-color: #303030; */
+  background-color: #838383;
+  border-radius: 32px  ;
+  padding: 50px;
+  margin: 15px;
+}
 #bt{
   color:#787878 ;
   /* border-radius:32px ;
@@ -54,6 +64,7 @@ font-size: 36px;
 margin-left: 50px;
 }
 .help{
+  /* background-color: #fff; */
 margin: auto;
 color: #fff;
 }
@@ -108,7 +119,8 @@ top: 0;
   width: 60vw;
   /* background-color: #78787896; */
   /* background-color: #bebdb896; */
-  background-color: #303030;
+  /* background-color: #303030; */
+  background-color: #202020;
    padding: 20px; 
   font-family: sans-serif;
   color: #fff;
@@ -121,7 +133,8 @@ top: 0;
 }
 .chat-body {
  /* background-color:#bebdb896;  */
- background-color: #303030;
+ /* background-color: #303030; */
+ background-color: #202020;
 
 
 
@@ -140,13 +153,14 @@ top: 0;
 .chat-input {
   /* background-color:  #78787896; */
   /* background-color: #bebdb896; */
-  background-color: #303030;
+  /* background-color: #303030; */
+  background-color: #202020;
   padding: 0 60px;
   /* border-radius: 0 0 32px 32px; */
   height: 60px;
   display: flex;
   align-items: center;
-  width: 60vw;
+  width: 55vw;
 
 }
 
