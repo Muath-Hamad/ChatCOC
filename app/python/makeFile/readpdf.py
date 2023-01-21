@@ -13,7 +13,7 @@ import tabula
 
 
 # # convert PDF into CSV file
-tabula.convert_into("../data/class.pdf", "../data/output.csv", output_format="csv", pages='all')
+tabula.convert_into("C:/Users/Abdul/Desktop/QU/QU-Chatbot/app/python/data/class.pdf", "C:/Users/Abdul/Desktop/QU/QU-Chatbot/app/python/data/output.csv", output_format="csv", pages='all')
 
 
 
@@ -25,7 +25,7 @@ tabula.convert_into("../data/class.pdf", "../data/output.csv", output_format="cs
 
 
 
-df = pd.read_csv('../data/output.csv')
+df = pd.read_csv('C:/Users/Abdul/Desktop/QU/QU-Chatbot/app/python/data/output.csv')
 
 
 
@@ -59,9 +59,9 @@ for index, row in df.iterrows():
 
 df = df.drop(['اسم المقرر'] , axis=1)
 
-df.isna().sum()
+# df.isna().sum()
 
-df[df['المستوى'].isna()   ][df['المحاضر'].isna() == False] # these that has not been assign any time
+# df[df['المستوى'].isna()   ][df['المحاضر'].isna() == False] # these that has not been assign any time
 
 
 for index, row in df.iterrows():
@@ -79,24 +79,24 @@ for index, row in df.iterrows():
 
 
 
-df[df['المستوى'].isna()   ][df['المحاضر'].isna() == False] # these that has not been assign any time
+# df[df['المستوى'].isna()   ][df['المحاضر'].isna() == False] # these that has not been assign any time
 
-df.isna().sum()
-
-
-df[df['اعلى حد'].isna()] # no meaning
+# df.isna().sum()
 
 
-df.dropna(subset=['اعلى حد'] , inplace=True)
+# df[df['اعلى حد'].isna()] # no meaning
 
 
-df.isna().sum()
+df = df.dropna(subset=['اعلى حد'] )
+
+
+# df.isna().sum()
 
 
 df['index'] = df.index
 
 
-df[df['النشاط'].isna()]
+# df[df['النشاط'].isna()]
 
 
 # for index, row in df.iterrows():
@@ -117,13 +117,13 @@ df[df['النشاط'].isna()]
 df = df.fillna(method='ffill') # fill all values by above
 
 
-df.isna().sum()
+# df.isna().sum()
 
-df[df['القاعة'].isna()]
+# df[df['القاعة'].isna()]
 
 
 # ## rename columns
-df.head(1)
+# df.head(1)
 
 
 df = df.rename(columns={"Unnamed: 16": "الشعبة", "الشعب": "المقرر", "Unnamed: 14": "اسم المقرر", "المقرر": "ساعات المقرر", "س": "النشاط", "النشاط": "اعلى حد", "التسلسل": "المسجلين", "اعلى حد": "الايام", "المسجلين": "من" , "الوقت": "الى"} )
@@ -153,10 +153,10 @@ for ind , row in df.iterrows() : # change to eng
             pass
 
 
-df['الى'].value_counts()
+# df['الى'].value_counts()
 
 
-df['المقرر'].value_counts()
+# df['المقرر'].value_counts()
 
 
 
@@ -172,9 +172,9 @@ for index, row in df.iterrows():
 import re
 for index, row in df.iterrows():
     # print(i)
-    if re.search(r"\s", row['المقرر']):
+    if re.search(r"/s", row['المقرر']):
     # print(i)
-        i = re.sub(r"\s", "", row['المقرر'])
+        i = re.sub(r"/s", "", row['المقرر'])
         df['المقرر'][index] = i
 
 
@@ -184,11 +184,11 @@ df['المقرر'].unique()
 
 
 
-df[df['المقرر'] == 'CS451']['الشعبة']
+# df[df['المقرر'] == 'CS451']['الشعبة']
 
 
 
 
-# df.to_csv('../data/class.csv' , index=False)
+df.to_csv('../data/class.csv' , index=False)
 #
 
