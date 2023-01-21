@@ -36,6 +36,10 @@
 
                     @auth
                         <a href="{{ url('/profile') }}" class="">{{trans('in.Profile')}}</a>
+                        <!-- <a href="route('logout')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ trans('in.LogOut') }}</a> -->
                     @else
                         <a href="{{ route('login') }}" class="">{{trans('in.Log-in')}}</a>
 

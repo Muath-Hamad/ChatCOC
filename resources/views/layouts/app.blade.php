@@ -17,8 +17,11 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <style>
+            input[type="file"] {
+            display: none;
+            }
            body{
-            background-color:#6C6E8c;
+            background-color:#202020;
             /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
            }
             </style>
@@ -29,7 +32,7 @@
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-white shadow">
+                <header style="background-color: #bebdb896;">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>

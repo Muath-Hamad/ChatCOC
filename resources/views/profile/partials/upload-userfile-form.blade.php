@@ -1,11 +1,11 @@
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Personal User File') }}
+            {{ __('in.UserFile') }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600">
-            {{ __("Upload your academic record .pdf file to feed the Chatbot") }}
+            {{ __('in.FileM') }}
         </p>
     </header>
 
@@ -36,15 +36,22 @@
         {{-- this will be shown if user doesnt have afile uploaded --}}
 
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <input type="file" name="userfile" id="userfile" class="bg-gray-50 border border-gray-300 text-gray-900">
+            <!-- <x-input-label for="name" :value="__('in.Name')" /> -->
+            <label class="custom-file-upload">
+    
+  
+            <input type="file" name="userfile" id="userfile" >
+            <div class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-arrow-up-fill" viewBox="0 0 16 16">
+                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM6.354 9.854a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 8.707V12.5a.5.5 0 0 1-1 0V8.707L6.354 9.854z"/>
+                    </svg></div>
+            </label>
             @error('userfile')
                 <small class="tect-red-500">{{ $message }}</small>
             @enderror
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-primary-button>{{ __('in.Save') }}</x-primary-button>
 
 
             @if (session('status') === 'profile-updated')
