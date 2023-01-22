@@ -27,7 +27,7 @@ class AdminfileController extends Controller
 
     public function store(Request $request)
     {
-
+        dd($request);
         $request->validate([
             'adminf' => ['required','mimes:pdf','max:10000']
         ]);

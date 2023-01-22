@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin', [adminpageController::class, 'index'])->name('admin');
     Route::get('/op', [operatorpageController::class, 'index'])->name('operator');
     Route::post('/profile', [UserfileController::class, 'store'])->name('Userfile.store');
-    // Route::post('/admin/file', [AdminfileController::class, 'store'])->name('adminfile.store');
+    Route::post('/admin/file', [AdminfileController::class, 'store'])->name('adminfile.store');
     Route::post('/admin', [AdminfileController::class, 'create'])->name('adminfile.create');
     Route::delete('/admin/file/{file}', [AdminfileController::class, 'destroy'])->name('adminfile.destroy');
     Route::delete('/profile/file/{file}', [UserfileController::class, 'destroy'])->name('Userfile.destroy');
