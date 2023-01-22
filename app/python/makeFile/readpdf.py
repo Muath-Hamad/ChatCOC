@@ -11,10 +11,14 @@ import pandas as pd
 import numpy as np
 import tabula
 
+passed = sys.argv[1]
+
+inputtargetpath = "C:/xampp/htdocs/QU-Chatbot/storage/app/public/unprocessed_adminfiles/" + passed + ".pdf"
+outputtargetpath = "C:/xampp/htdocs/QU-Chatbot/storage/app/public/processed_adminfiles/" + passed + ".csv"
 
 # # convert PDF into CSV file
-tabula.convert_into("C:/Users/Abdul/Desktop/QU/QU-Chatbot/app/python/data/class.pdf", "C:/Users/Abdul/Desktop/QU/QU-Chatbot/app/python/data/output.csv", output_format="csv", pages='all')
-
+# tabula.convert_into("C:/Users/Abdul/Desktop/QU/QU-Chatbot/app/python/data/class.pdf", "C:/Users/Abdul/Desktop/QU/QU-Chatbot/app/python/data/output.csv", output_format="csv", pages='all')
+tabula.convert_into(inputtargetpath, outputtargetpath, output_format="csv", pages='all')
 
 
 
@@ -25,7 +29,7 @@ tabula.convert_into("C:/Users/Abdul/Desktop/QU/QU-Chatbot/app/python/data/class.
 
 
 
-df = pd.read_csv('C:/Users/Abdul/Desktop/QU/QU-Chatbot/app/python/data/output.csv')
+df = pd.read_csv(outputtargetpath)
 
 
 
@@ -189,6 +193,6 @@ df['المقرر'].unique()
 
 
 
-df.to_csv('../data/class.csv' , index=False)
+df.to_csv(outputtargetpath , index=False)
 #
 

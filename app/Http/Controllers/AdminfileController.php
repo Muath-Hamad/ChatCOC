@@ -27,43 +27,43 @@ class AdminfileController extends Controller
 
     public function store(Request $request)
     {
-        dd($request);
+
         $request->validate([
-            'adminf' => ['required','mimes:pdf','max:10000']
+            'adminfile' => ['required','mimes:pdf','max:10000']
         ]);
         $user = Auth::user();
 
 
         $curradminf = new adminfile();
 
-        if($request->hasf('adminf')){
+        if($request->hasFile('adminfile')){
 
-            $fname = Auth::id().'_'. time();
-            $extension = $request->f('adminf')->getClientOriginalExtension();
-            $namewithext = $fname . '.'.$extension;
-            $request->f('adminf')->storeAs(
-                'unprocessed_adminfs',
+            $filename = Auth::id().'_'. time();
+            $extension = $request->file('adminfile')->getClientOriginalExtension();
+            $namewithext = $filename . '.'.$extension;
+            $request->file('adminfile')->storeAs(
+                'unprocessed_adminfiles',
                 $namewithext,
                 'public'
             );
         }
 
-        $script_path = app_path() . '\python\\' . '\makef\\'.'readpdf.py'; // set up readpdf script path
+        $script_path = app_path() . '\python\\' . '\makeFile\\'.'readpdf.py'; // set up readpdf script path
 
         try{
 
-            $process = new Process(['C:\Python38\python.exe' , $script_path ,$fname]);
+            $process = new Process(['C:\Python38\python.exe' , $script_path ,$filename]);
             $process->run();
 
             throw new ProcessFailedException($process);
         }catch(Exception $e){
             $error_msg = $e->getMessage();
-            echo 'failed';
+            //return view('Admin.adminpage')->with('failed', 'System failed to process uploaded file !');
             dd($error_msg);
             }
 
         if($process->isSuccessful()){
-            echo 'procces successful';
+
 
 
             $curradminf->user_id = $user['id'];
@@ -72,9 +72,9 @@ class AdminfileController extends Controller
             $curradminf->is_excel = false;
             $curradminf->is_schedule = true;
             $curradminf->save();
-
+            return redirect()->route('admin')->with('success', 'System processed uploaded file successfuly !');
             }else{
-                 echo 'failed';
+                 return view('Admin.adminpage')->with('failed', 'System failed to process uploaded file !');
             }
 
     }

@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col col-md-6"> <b>Chatbot files</b></div>
             <div class="col col-md-6">
-                <a href="{{ route('adminfile.create') }}" class="btn btn-success btn-sm float-end">New</a>
+                {{-- <a href="{{ route('adminfile.create') }}" class="btn btn-success btn-sm float-end">New</a> --}}
                 {{-- <a href="{{ route('adminfile.store') }}" class="btn btn-success btn-sm float-end">New</a> --}}
             </div>
         </div>
