@@ -56,8 +56,10 @@ def clean_str(text):
 
     return text
 Qu = pd.read_excel('C:/xampp/htdocs/QU-Chatbot/app/python/data/Question.xlsx')
-df = pd.read_csv('C:/xampp/htdocs/QU-Chatbot/app/python/data/class.csv')
-st = pd.read_csv('C:/xampp/htdocs/QU-Chatbot/app/python/data/StudentGPA.csv')
+# df = pd.read_csv('C:/xampp/htdocs/QU-Chatbot/app/python/data/class.csv')
+df = pd.read_csv('C:\xampp\htdocs\QU-Chatbot\storage\app\public\processed_adminfiles\1_1674395360.csv')
+# st = pd.read_csv('C:/xampp/htdocs/QU-Chatbot/app/python/data/StudentGPA.csv')
+st = pd.read_csv('C:\xampp\htdocs\QU-Chatbot\storage\app\public\processed_userfiles\1_1674120301.csv')
 conflict = pd.read_csv('C:/xampp/htdocs/QU-Chatbot/app/python/data/clPLAN.csv')
 
 
