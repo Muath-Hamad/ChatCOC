@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
-class AdminfController extends Controller
+class AdminfileController extends Controller
 {
     //
     public function index()
@@ -22,7 +22,7 @@ class AdminfController extends Controller
 
     public function create()
     {
-        # code...
+        dd ('test');
     }
 
     public function store(Request $request)
@@ -94,23 +94,24 @@ class AdminfController extends Controller
         # code...
     }
 
-    public function destroy(adminfile $f)
+    public function destroy($f)
     {
-        # code...
-        echo 'test';
-        $f_name = $f -> path;
-        $f ->forceDelete();
-         return redirect()->route('admin')->with('success', 'f deleted successfully');
-         // delete the f from storage
-         $f_name = 'processed_adminfs/'.$f_name;
-         try {
+
+        $instance = adminfile::find($f);
+        $f_name = $instance -> path;
+
+        $instance ->forceDelete();
+        return redirect()->route('admin')->with('success', 'file deleted successfully');
+        // delete the f from storage
+        $f_name = 'processed_adminfs/'.$f_name;
+        try {
              Storage::delete($f_name);
              return redirect()->route('admin')->with('success', 'f deleted successfully');
 
-         } catch (\Exception $e) {
+        } catch (\Exception $e) {
 
             return redirect()->route('admin')->with('failed', 'f deletion failed !');
-         }
+        }
 
 
     }

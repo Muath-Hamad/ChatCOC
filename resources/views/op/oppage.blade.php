@@ -19,9 +19,9 @@
                 {{-- <div class="p-6 text-gray-900">
                     {{ __("You're logged in as an admin!") }}
                 </div> --}}
-                <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <div class="max-w-xl">
-                        {{ __("You're logged in as an operator!") }}
+                <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg ">
+                    <div class="max-w-xl mx-auto">
+
                         @include('op.partials.show-users')
                     </div>
                 </div>

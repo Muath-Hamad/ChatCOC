@@ -83,7 +83,7 @@ return [
     */
 
     'locale' => 'ar',
-    
+
 
     /*
     |--------------------------------------------------------------------------
@@ -195,6 +195,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        // Laratrust provider
+        Laratrust\LaratrustServiceProvider::class,
 
     ],
 
@@ -211,6 +213,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'Laratrust' => Laratrust\LaratrustFacade::class,
     ])->toArray(),
 
 ];

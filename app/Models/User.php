@@ -12,7 +12,7 @@ use Laratrust\Traits\LaratrustUserTrait;
 class User extends Authenticatable
 {
     use LaratrustUserTrait;
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable ;
 
     /**
      * The attributes that are mass assignable.
@@ -47,7 +47,7 @@ class User extends Authenticatable
     public function userfile(){
         return $this->hasOne(userfile::class);
     }
-    public function adminfile(){
-        return $this->hasOne(adminfile::class);
+    public function adminfiles(){
+        return $this->hasMany(adminfile::class);
     }
 }
