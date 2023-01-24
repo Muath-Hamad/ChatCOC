@@ -27,5 +27,8 @@ return [
     'UpdateAccount'=>'Update your account profile information and email address.',
     'UserFile'=>'Personal User File',
     'FileM'=>'Upload your academic record .pdf file to feed the Chatbot',
+    'DeleteAccount'=> 'Delete Account',
+    'Cancel'=>'Cancel',
+    'sure'=>'Are you sure you want to delete your account?'
 
 ];
