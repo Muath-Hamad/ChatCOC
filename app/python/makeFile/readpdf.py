@@ -11,10 +11,10 @@ import pandas as pd
 import numpy as np
 import tabula
 
-passed = sys.argv[1]
+# passed = sys.argv[1]
 
-inputtargetpath = "C:/xampp/htdocs/QU-Chatbot/storage/app/public/unprocessed_adminfiles/" + passed + ".pdf"
-outputtargetpath = "C:/xampp/htdocs/QU-Chatbot/storage/app/public/processed_adminfiles/" + passed + ".csv"
+inputtargetpath = "C:/Users/Abdul/Desktop/QU/QU-Chatbot/app/python/data/class.pdf" #+ passed + ".pdf"
+outputtargetpath = "C:/Users/Abdul/Desktop/QU/QU-Chatbot/app/python/data/class123.csv"# + passed + ".csv"
 
 # # convert PDF into CSV file
 # tabula.convert_into("C:/Users/Abdul/Desktop/QU/QU-Chatbot/app/python/data/class.pdf", "C:/Users/Abdul/Desktop/QU/QU-Chatbot/app/python/data/output.csv", output_format="csv", pages='all')
@@ -35,7 +35,7 @@ df = pd.read_csv(outputtargetpath)
 
 
 
-df.dropna(subset=['القاعة'] , inplace=True) # if القاعة is null then delete all row
+df = df.dropna(subset=['القاعة'] ) # if القاعة is null then delete all row
 
 
 

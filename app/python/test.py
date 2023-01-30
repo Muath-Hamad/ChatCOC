@@ -22,6 +22,7 @@ from scipy.spatial.distance import cosine
 import nltk
 
 
+
 def is_2d_array(obj): # check if given obj is a 2-D array
     try:
         iter(obj)
