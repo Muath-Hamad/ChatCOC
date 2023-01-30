@@ -119,64 +119,66 @@ for word in li :
 
     maxPer = 0
     maxSen = []
-if searchItem =="" :
-    for j in range(len(Qu['سوال'])):
-        sen1 = Qu['سوال'][j].split() #taking only the first Question in the list 'اين قاعة'
-        sen2 = target.split()
-        wordVec1 = 0
-        for i in range(len(sen1)):
-            #cleaning the word
-            try:
-                word = clean_str(sen1[i])
-            # adding the vectors of all words
-                wordVec1 += model.wv[ word]
-            except:
-                continue
+if similarity >= 0.3:
+    if searchItem =="" :
+        for j in range(len(Qu['سوال'])):
+            sen1 = Qu['سوال'][j].split() #taking only the first Question in the list 'اين قاعة'
+            sen2 = target.split()
+            wordVec1 = 0
+            for i in range(len(sen1)):
+                #cleaning the word
+                try:
+                    word = clean_str(sen1[i])
+                # adding the vectors of all words
+                    wordVec1 += model.wv[ word]
+                except:
+                    continue
 
-        wordVec2 = 0
-        for i in range(len(sen2)):
-            try:
-                word = clean_str(sen2[i])
-                wordVec2 += model.wv[ word]
-            except:
-                continue
-        #finding the cosine similarity of the two sentences
-        similarity = 1 - cosine(wordVec1, wordVec2)
-        if similarity > maxPer :
-            maxPer = similarity
-            maxSen = sen1
-            seachLoc = j
+            wordVec2 = 0
+            for i in range(len(sen2)):
+                try:
+                    word = clean_str(sen2[i])
+                    wordVec2 += model.wv[ word]
+                except:
+                    continue
+            #finding the cosine similarity of the two sentences
+            similarity = 1 - cosine(wordVec1, wordVec2)
+            if similarity > maxPer :
+                maxPer = similarity
+                maxSen = sen1
+                seachLoc = j
+    else:
+        
+        for j in range(len(Qu['سوال'])):
+            sen1 = Qu['سوال'][j].split() #taking only the first Question in the list 'اين قاعة'
+            sen2 = target.split()
+            wordVec1 = 0
+            for i in range(len(sen1)):
+                #cleaning the word
+                try:
+                    word = clean_str(sen1[i])
+                # adding the vectors of all words
+                    wordVec1 += model.wv[ word]
+                except:
+                    continue
+                
+            wordVec2 = 0
+            for i in range(len(sen2)):
+                try:
+                    word = clean_str(sen2[i])
+                    wordVec2 += model.wv[ word]
+                except:
+                    continue
+            #finding the cosine similarity of the two sentences 
+            similarity = 1 - cosine(wordVec1, wordVec2)
+            if similarity > maxPer :
+                maxPer = similarity
+                maxSen = sen1
+                seachLoc = j
 else:
-    
-    for j in range(len(Qu['سوال'])):
-        sen1 = Qu['سوال'][j].split() #taking only the first Question in the list 'اين قاعة'
-        sen2 = target.split()
-        wordVec1 = 0
-        for i in range(len(sen1)):
-            #cleaning the word
-            try:
-                word = clean_str(sen1[i])
-            # adding the vectors of all words
-                wordVec1 += model.wv[ word]
-            except:
-                continue
-            
-        wordVec2 = 0
-        for i in range(len(sen2)):
-            try:
-                word = clean_str(sen2[i])
-                wordVec2 += model.wv[ word]
-            except:
-                continue
-        #finding the cosine similarity of the two sentences 
-        similarity = 1 - cosine(wordVec1, wordVec2)
-        if similarity > maxPer :
-            maxPer = similarity
-            maxSen = sen1
-            seachLoc = j
+    print("الرجاء سوال سوال عن الجامعه ")
 
-
-
+similarity
 # with open("text.txt", "w", encoding="utf-8") as f:
 #     f.write(target)
 
