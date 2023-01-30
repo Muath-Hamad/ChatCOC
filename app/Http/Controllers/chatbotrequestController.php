@@ -48,7 +48,7 @@ class chatbotrequestController extends Controller
             $userinput = mb_convert_encoding($userinput , "UTF-8"); // encode $userinput to UTF-8
 
             if($req_id != -1){ // ensure that instance was saved to DB
-                $process = new Process(['C:\Python38\python.exe' , $script_path ,$userinput , $req_id]); // prepare process
+                $process = new Process(['C:\Python39\python.exe' , $script_path ,$userinput , $req_id]); // prepare process
                 $process->run(); // excute proccess
 
                 if($process->getOutput()== ""){

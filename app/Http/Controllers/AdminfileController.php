@@ -52,7 +52,7 @@ class AdminfileController extends Controller
 
         try{
 
-            $process = new Process(['C:\Python38\python.exe' , $script_path ,$filename]);
+            $process = new Process(['C:\Python39\python.exe' , $script_path ,$filename]);
             $process->run();
 
             throw new ProcessFailedException($process);
