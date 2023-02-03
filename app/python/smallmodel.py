@@ -1,24 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys
-from gensim.models import word2vec
-import tensorflow as tf
-from keras.preprocessing.text import Tokenizer
-from keras_preprocessing.sequence import pad_sequences
+# from gensim.models import word2vec
+# import tensorflow as tf
+# from keras.preprocessing.text import Tokenizer
+# from keras_preprocessing.sequence import pad_sequences
 from numpy import array
-import gensim
-from gensim.models import KeyedVectors
+# import gensim
+# from gensim.models import KeyedVectors
 import pandas as pd
 import numpy as np
-import gensim
-import re
-import spacy
+# import gensim
+# import re
+# import spacy
 from scipy.spatial.distance import cosine
 
 from datetime import datetime
-import gensim
+# import gensim
 import re
-import spacy
+# import spacy
 
 import mysql.connector
 from mysql.connector import Error
@@ -176,55 +176,55 @@ def update_DB(string):
             cnx.close()
         return ""
 
-
+response = ""
 if maxPer >= 0.3:
     if searchItem != '':
         if Qu.loc[seachLoc][1] == 1 :
             for i in range(len(df[df['المقرر'] == searchItem]['الشعبة'])):
-                 response = str(f" شعبه {list(df[df['المقرر'] == searchItem]['الشعبة'])[i] } في قاعه رقم {list(df[df['المقرر'] == searchItem]['القاعة'])[i]}")
-                 update_DB(response)
+                 response += "\n" + str(f" شعبه {list(df[df['المقرر'] == searchItem]['الشعبة'])[i] } في قاعه رقم {list(df[df['المقرر'] == searchItem]['القاعة'])[i]}")
+
         #مين يدرس
         elif Qu.loc[seachLoc][1] == 2 :
              response = str(f"يدرسها {list(df[df['المقرر'] == searchItem]['المحاضر'].unique())}")
-             update_DB(response)
+
         #متى محاضره
         # متى محاضره
         elif Qu.loc[seachLoc][1] == 3 :
             for i in range(len(df[df['المقرر'] == searchItem]['الشعبة'])):
-                 response = str(f" شعبه {list(df[df['المقرر'] == searchItem]['الشعبة'])[i] } يوم {list(df[df['المقرر'] == searchItem]['الايام'])[i] } تبدا من {list(df[df['المقرر'] == searchItem]['من'])[i]} الى {list(df[df['المقرر'] == searchItem]['الى'])[i]}")
-                 update_DB(response)
+                 response += "\n" + str(f" شعبه {list(df[df['المقرر'] == searchItem]['الشعبة'])[i] } يوم {list(df[df['المقرر'] == searchItem]['الايام'])[i] } تبدا من {list(df[df['المقرر'] == searchItem]['من'])[i]} الى {list(df[df['المقرر'] == searchItem]['الى'])[i]}")
+
         #متى اختبار
         elif Qu.loc[seachLoc][1] == 4 :
              response = str(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
-             update_DB(response)
+
         #هل استطيع تنزيل
         elif Qu.loc[seachLoc][1] == 5 :
             for i in range(len(conflict['ماده'])):
                 if str(conflict['ماده'][i]) == str(searchItem):
                     if str(conflict['متطلب'][i]) == 'nan':
-                        response = str(" نعم يمكنك تنزيل الماده... لايوجد لها متطلب")
-                        update_DB(response)
+                        response += "\n" +str(" نعم يمكنك تنزيل الماده... لايوجد لها متطلب")
+
                     elif  str(conflict['متطلب'][i]) in list(st['رمز المقرر']) :
-                             response = str("نعم يمكنك تنزيل الماده")
-                             update_DB(response)
+                             response += "\n" +str("نعم يمكنك تنزيل الماده")
+
                     else:
-                         response = str("لا يمكنك")
-                         update_DB(response)
+                         response += "\n" + str("لا يمكنك")
+
     else:
         if Qu1.loc[seachLoc][1] == 7 :
              response = str(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][0]), '%Y-%m-%d %H:%M:%S').date())  } الى {str(datetime.strptime(str(yr[yr.columns[2]][0]), '%Y-%m-%d %H:%M:%S').date())  }")
-             update_DB(response)
+
         elif Qu1.loc[seachLoc][1] == 8 :
              response = str(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][1]), '%Y-%m-%d %H:%M:%S').date())  } " )
-             update_DB(response)
+
                 # الى {str(datetime.strptime(str(yr[yr.columns[2]][0]), '%Y-%m-%d %H:%M:%S').date())  }")
         elif Qu1.loc[seachLoc][1] == 9 :
              response = str(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][2]), '%Y-%m-%d %H:%M:%S').date())  } الى {str(datetime.strptime(str(yr[yr.columns[2]][2]), '%Y-%m-%d %H:%M:%S').date())  }")
-             update_DB(response)
+
 
         elif Qu1.loc[seachLoc][1] == 9 :
              response = str(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][2]), '%Y-%m-%d %H:%M:%S').date())  } الى {str(datetime.strptime(str(yr[yr.columns[2]][2]), '%Y-%m-%d %H:%M:%S').date())  }")
-             update_DB(response)
+
         elif Qu1.loc[seachLoc][1] == 10 :
             x = []
             i = 15
@@ -239,17 +239,17 @@ if maxPer >= 0.3:
                     break;
                 i=i+ 1
             response = str(f"الاجازات تكون في الايام الاتيه {x}")
-            update_DB(response)
-        elif Qu1.loc[seachLoc][1] == 11:
 
+        elif Qu1.loc[seachLoc][1] == 11:
             response = str(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][6-2]), '%Y-%m-%d %H:%M:%S').date())  } الى {str(datetime.strptime(str(yr[yr.columns[2]][6-2]), '%Y-%m-%d %H:%M:%S').date())  }")
-            update_DB(response)
+
 
         elif Qu1.loc[seachLoc][1] == 12:
-
             response = str(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][8-2]), '%Y-%m-%d %H:%M:%S').date())  } الى {str(datetime.strptime(str(yr[yr.columns[2]][8-2]), '%Y-%m-%d %H:%M:%S').date())  }")
-            update_DB(response)
+
 else:
      response = str("الرجاء سؤال سؤال عن الجامعة")
-     update_DB(response)
+
+
+update_DB(response)
 # print(maxPer)
