@@ -43,21 +43,31 @@ class chatbotrequestController extends Controller
             $req_id = $reqlog->id; // assign the added instance id to $req_id
 
          //return response($userinput);
-          $script_path = app_path() . '\python\\' . 'chatbot.py'; // set up chatbot script path
+          $script_path = app_path() . '\python\\' . 'smallmodel.py'; // set up chatbot script path
 
             $userinput = mb_convert_encoding($userinput , "UTF-8"); // encode $userinput to UTF-8
 
             if($req_id != -1){ // ensure that instance was saved to DB
+                try{
                 $process = new Process(['C:\Python39\python.exe' , $script_path ,$userinput , $req_id]); // prepare process
                 $process->run(); // excute proccess
+                throw new ProcessFailedException($process);
+                    }catch(Exception $e){
+                        $error_msg = $e->getMessage();
+                        if($error_msg !== "Expected a failed process, but the given process was successful."){
+                            return response($error_msg);
+                        }
 
-                if($process->getOutput()== ""){
-                    $process_succesful =true;
-                }else{
-                    $process_succesful =false;
-                    return response($process->getOutput());
+                    }
                 }
-                 }
+
+                // if($process->getOutput()== ""){
+                //     $process_succesful =true;
+                // }else{
+                //     $process_succesful =false;
+                //     return response($process->getOutput());
+                // }
+                //  }
 
           if($process_succesful && $req_id != -1){ // ensure that process is succesful & and the instance was created for the request
             $result = chatRequest::find($req_id);
