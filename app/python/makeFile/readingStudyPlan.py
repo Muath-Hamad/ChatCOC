@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 import tabula
 
-df = pd.read_csv('../data/class.csv')
+df = pd.read_csv('.\app\python\data\class.csv')
 
 li = list(df['المقرر'].unique())
 
