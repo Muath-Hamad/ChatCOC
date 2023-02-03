@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import sys
 from gensim.models import word2vec
 import tensorflow as tf
 from keras.preprocessing.text import Tokenizer
@@ -17,14 +20,25 @@ import gensim
 import re
 import spacy
 
-load = np.load("./data/model.npy", allow_pickle=True)
-Qu = pd.read_excel('./data/Question.xlsx')
-df = pd.read_csv('./data/class.csv')
-st = pd.read_csv('./data/StudentGPA.csv')
+import mysql.connector
+from mysql.connector import Error
 
-yr = pd.read_excel('./data/year.xlsx')
-Qu1 = pd.read_excel('./data/Question2.xlsx')
-conflict = pd.read_csv('./data/clPLAN.csv')
+# prepare passed data
+u_req=sys.argv[1] # User request to Chabot
+target= ""
+target = target.join(u_req)
+target.encode("UTF-8")
+target = target.upper()
+req_id = int(sys.argv[2]) # current request id in DB
+
+load = np.load("C:/xampp/htdocs/QU-Chatbot/app/python/data/model.npy", allow_pickle=True)
+Qu = pd.read_excel('C:/xampp/htdocs/QU-Chatbot/app/python/data/Question.xlsx')
+df = pd.read_csv('C:/xampp/htdocs/QU-Chatbot/app/python/data/class.csv')
+st = pd.read_csv('C:/xampp/htdocs/QU-Chatbot/app/python/data/StudentGPA.csv')
+
+yr = pd.read_excel('C:/xampp/htdocs/QU-Chatbot/app/python/data/year.xlsx')
+Qu1 = pd.read_excel('C:/xampp/htdocs/QU-Chatbot/app/python/data/Question2.xlsx')
+conflict = pd.read_csv('C:/xampp/htdocs/QU-Chatbot/app/python/data/clPLAN.csv')
 
 
 model= pd.DataFrame(load)
@@ -34,32 +48,32 @@ model= pd.DataFrame(load)
 def clean_str(text):
     search = ["أ","إ","آ","ة","_","-","/",".","،"," و "," يا ",'"',"ـ","'","ى","\\",'\n', '\t','"','?','؟','!']
     replace = ["ا","ا","ا","ه"," "," ","","",""," و"," يا","","","","ي","",' ', ' ',' ',' ? ',' ؟ ',' ! ']
-    
+
     #remove tashkeel
     p_tashkeel = re.compile(r'[\u0617-\u061A\u064B-\u0652]')
     text = re.sub(p_tashkeel,"", text)
-    
+
     #remove longation
     p_longation = re.compile(r'(.)\1+')
     subst = r"\1\1"
     text = re.sub(p_longation, subst, text)
-    
+
     text = text.replace('وو', 'و')
     text = text.replace('يي', 'ي')
     text = text.replace('اا', 'ا')
-    
+
     for i in range(0, len(search)):
         text = text.replace(search[i], replace[i])
-    
-    #trim    
+
+    #trim
     text = text.strip()
 
     return text
-# docs = 
-# this Example of Question came from the user it also should include the name of class but this is how it should looks after cleaning 
+# docs =
+# this Example of Question came from the user it also should include the name of class but this is how it should looks after cleaning
 li = list(df['المقرر'].unique())
-target = "وين قاعه  cs181 " 
-target = target.upper()
+# target = "وين قاعه  cs181 "
+# target = target.upper()
 #spliting the sentence into words
 for word in li :
     word.upper()
@@ -77,7 +91,7 @@ if searchItem == "":
         sen1 = Qu1['سوال'][j].split() #taking only the first Question in the list 'اين قاعة'
         sen2 = target.split()
         wordVec1 = 0
-        # finding the first word vectors 
+        # finding the first word vectors
         for i in sen1:
             #cleaning the word
             try:
@@ -97,19 +111,19 @@ if searchItem == "":
             except:
                 print(11)
         # comapring
-        #finding the cosine similarity of the two sentences 
+        #finding the cosine similarity of the two sentences
         similarity = 1 - cosine(wordVec1, wordVec2)
         if similarity > maxPer :
             maxPer = similarity
             maxSen = sen1
             seachLoc = j
-    
+
 else:
     for j in range(len(Qu['سوال'])):
         sen1 = Qu['سوال'][j].split() #taking only the first Question in the list 'اين قاعة'
         sen2 = target.split()
         wordVec1 = 0
-        # finding the first word vectors 
+        # finding the first word vectors
         for i in sen1:
             #cleaning the word
             try:
@@ -129,72 +143,111 @@ else:
             except:
                 print(11)
         # comapring
-        #finding the cosine similarity of the two sentences 
+        #finding the cosine similarity of the two sentences
         similarity = 1 - cosine(wordVec1, wordVec2)
         if similarity > maxPer :
             maxPer = similarity
             maxSen = sen1
             seachLoc = j
-            
+
+def update_DB(string):
+    # Connect to the database
+    try:
+        cnx = mysql.connector.connect(user='root',
+                              password='',
+                              host='127.0.0.1',
+                              database='chatbot')
+
+        cursor = cnx.cursor()
+        # prepare query statement with placeholders
+        query = "UPDATE chat_requests SET cr_content = %s WHERE id = %s"
+        # excute query with parameters
+        cursor.execute(query, (string, req_id))
+        # commit the changes
+        cnx.commit()
+    except Error as e:
+        return "error while connction to DB :" +str(e)
+    finally:
+        # close cursor and connection
+        if(cnx.is_connected()):
+            cursor.close()
+            cnx.close()
+        return ""
+
+
 if maxPer >= 0.3:
     if searchItem != '':
         if Qu.loc[seachLoc][1] == 1 :
             for i in range(len(df[df['المقرر'] == searchItem]['الشعبة'])):
-                print(f" شعبه {list(df[df['المقرر'] == searchItem]['الشعبة'])[i] } في قاعه رقم {list(df[df['المقرر'] == searchItem]['القاعة'])[i]}")
+                 response = str(f" شعبه {list(df[df['المقرر'] == searchItem]['الشعبة'])[i] } في قاعه رقم {list(df[df['المقرر'] == searchItem]['القاعة'])[i]}")
+                 update_DB(response)
         #مين يدرس
         elif Qu.loc[seachLoc][1] == 2 :
-            print(f"يدرسها {list(df[df['المقرر'] == searchItem]['المحاضر'].unique())}")
-        #متى محاضره 
-        # متى محاضره 
+             response = str(f"يدرسها {list(df[df['المقرر'] == searchItem]['المحاضر'].unique())}")
+             update_DB(response)
+        #متى محاضره
+        # متى محاضره
         elif Qu.loc[seachLoc][1] == 3 :
             for i in range(len(df[df['المقرر'] == searchItem]['الشعبة'])):
-                print(f" شعبه {list(df[df['المقرر'] == searchItem]['الشعبة'])[i] } يوم {list(df[df['المقرر'] == searchItem]['الايام'])[i] } تبدا من {list(df[df['المقرر'] == searchItem]['من'])[i]} الى {list(df[df['المقرر'] == searchItem]['الى'])[i]}")
+                 response = str(f" شعبه {list(df[df['المقرر'] == searchItem]['الشعبة'])[i] } يوم {list(df[df['المقرر'] == searchItem]['الايام'])[i] } تبدا من {list(df[df['المقرر'] == searchItem]['من'])[i]} الى {list(df[df['المقرر'] == searchItem]['الى'])[i]}")
+                 update_DB(response)
         #متى اختبار
         elif Qu.loc[seachLoc][1] == 4 :
-            print(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
+             response = str(f"  وقت الاختبار في الفتره {list(df[df['المقرر'] == searchItem]['فتره'].unique())}")
+             update_DB(response)
         #هل استطيع تنزيل
         elif Qu.loc[seachLoc][1] == 5 :
             for i in range(len(conflict['ماده'])):
                 if str(conflict['ماده'][i]) == str(searchItem):
                     if str(conflict['متطلب'][i]) == 'nan':
-                        print(" نعم يمكنك تنزيل الماده... لايوجد لها متطلب")
-                    elif  str(conflict['متطلب'][i]) in list(st['رمز المقرر']) : 
-                            print("نعم يمكنك تنزيل الماده") 
-                    else: 
-                        print("لا يمكنك")
-    else:                
+                        response = str(" نعم يمكنك تنزيل الماده... لايوجد لها متطلب")
+                        update_DB(response)
+                    elif  str(conflict['متطلب'][i]) in list(st['رمز المقرر']) :
+                             response = str("نعم يمكنك تنزيل الماده")
+                             update_DB(response)
+                    else:
+                         response = str("لا يمكنك")
+                         update_DB(response)
+    else:
         if Qu1.loc[seachLoc][1] == 7 :
-            print(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][0]), '%Y-%m-%d %H:%M:%S').date())  } الى {str(datetime.strptime(str(yr[yr.columns[2]][0]), '%Y-%m-%d %H:%M:%S').date())  }")
+             response = str(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][0]), '%Y-%m-%d %H:%M:%S').date())  } الى {str(datetime.strptime(str(yr[yr.columns[2]][0]), '%Y-%m-%d %H:%M:%S').date())  }")
+             update_DB(response)
         elif Qu1.loc[seachLoc][1] == 8 :
-            print(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][1]), '%Y-%m-%d %H:%M:%S').date())  } " )
+             response = str(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][1]), '%Y-%m-%d %H:%M:%S').date())  } " )
+             update_DB(response)
                 # الى {str(datetime.strptime(str(yr[yr.columns[2]][0]), '%Y-%m-%d %H:%M:%S').date())  }")
         elif Qu1.loc[seachLoc][1] == 9 :
-            print(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][2]), '%Y-%m-%d %H:%M:%S').date())  } الى {str(datetime.strptime(str(yr[yr.columns[2]][2]), '%Y-%m-%d %H:%M:%S').date())  }")
-        
+             response = str(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][2]), '%Y-%m-%d %H:%M:%S').date())  } الى {str(datetime.strptime(str(yr[yr.columns[2]][2]), '%Y-%m-%d %H:%M:%S').date())  }")
+             update_DB(response)
+
         elif Qu1.loc[seachLoc][1] == 9 :
-            print(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][2]), '%Y-%m-%d %H:%M:%S').date())  } الى {str(datetime.strptime(str(yr[yr.columns[2]][2]), '%Y-%m-%d %H:%M:%S').date())  }")
+             response = str(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][2]), '%Y-%m-%d %H:%M:%S').date())  } الى {str(datetime.strptime(str(yr[yr.columns[2]][2]), '%Y-%m-%d %H:%M:%S').date())  }")
+             update_DB(response)
         elif Qu1.loc[seachLoc][1] == 10 :
             x = []
-            i = 15 
-            while i<30:  
+            i = 15
+            while i<30:
                 try :
                     if str(yr[yr.columns[1]][i-2]) != 'NaT':
-                
+
                         x.append(str(datetime.strptime(str(yr[yr.columns[1]][i-2]) , '%Y-%m-%d %H:%M:%S').date()))
                         if str(yr[yr.columns[2]][i-2]) != 'NaT':
                             x.append(str(datetime.strptime(str(yr[yr.columns[2]][i-2]) , '%Y-%m-%d %H:%M:%S').date()))
-                except: 
+                except:
                     break;
                 i=i+ 1
-            print(f"الاجازات تكون في الايام الاتيه {x}")
+            response = str(f"الاجازات تكون في الايام الاتيه {x}")
+            update_DB(response)
         elif Qu1.loc[seachLoc][1] == 11:
-            
-            print(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][6-2]), '%Y-%m-%d %H:%M:%S').date())  } الى {str(datetime.strptime(str(yr[yr.columns[2]][6-2]), '%Y-%m-%d %H:%M:%S').date())  }")
-                
+
+            response = str(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][6-2]), '%Y-%m-%d %H:%M:%S').date())  } الى {str(datetime.strptime(str(yr[yr.columns[2]][6-2]), '%Y-%m-%d %H:%M:%S').date())  }")
+            update_DB(response)
+
         elif Qu1.loc[seachLoc][1] == 12:
-            
-            print(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][8-2]), '%Y-%m-%d %H:%M:%S').date())  } الى {str(datetime.strptime(str(yr[yr.columns[2]][8-2]), '%Y-%m-%d %H:%M:%S').date())  }")
+
+            response = str(f"يبدا من {str(datetime.strptime(str(yr[yr.columns[1]][8-2]), '%Y-%m-%d %H:%M:%S').date())  } الى {str(datetime.strptime(str(yr[yr.columns[2]][8-2]), '%Y-%m-%d %H:%M:%S').date())  }")
+            update_DB(response)
 else:
-    print("الرجاء سؤال سؤال عن الجامعة")
+     response = str("الرجاء سؤال سؤال عن الجامعة")
+     update_DB(response)
 # print(maxPer)
-            
