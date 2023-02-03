@@ -31,6 +31,8 @@ target.encode("UTF-8")
 target = target.upper()
 req_id = int(sys.argv[2]) # current request id in DB
 
+searchItem = ''
+
 load = np.load("C:/xampp/htdocs/QU-Chatbot/app/python/data/model.npy", allow_pickle=True)
 Qu = pd.read_excel('C:/xampp/htdocs/QU-Chatbot/app/python/data/Question.xlsx')
 df = pd.read_csv('C:/xampp/htdocs/QU-Chatbot/app/python/data/class.csv')
