@@ -91,3 +91,16 @@ const setScrollPosition = () => {
 //    time: new Date().toLocaleTimeString(),
 //  };
 
+
+// ======================================================
+
+document.getElementById("language-selector").addEventListener("click", function() {
+  if (document.documentElement.lang === "ar") {
+      document.documentElement.lang = "en";
+      localStorage.setItem("language", "en");
+  } else {
+      document.documentElement.lang = "ar";
+      localStorage.setItem("language", "ar");
+  }
+});
+
