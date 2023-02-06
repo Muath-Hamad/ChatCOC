@@ -30,6 +30,13 @@ body {
    color: #787878;
   /* background-color: #78787896; */
 }
+
+#language-selector{
+  
+  position: absolute;
+  
+  bottom: 5%;
+}
 .sidenav {
 height: 100%;
 width: 0;
