@@ -35,7 +35,7 @@
                     @auth
 
                         <a href="{{ url('/profile') }}" class="">{{trans('in.Profile')}}</a>
-                        <a class="" id="language-selector">عربي|English</a>
+                        
                         <!-- <a href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
@@ -46,7 +46,7 @@
 
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}" class="">{{trans('in.Register')}}</a>
-                            <a class="" id="language-selector">عربي|English</a>
+                           
                         @endif
                     @endauth
 
@@ -83,7 +83,7 @@
     </div>
       <div class="chat-input">
         <div class="input-sec ">
-          <input type="text" id="txtInput" placeholder="  .....اكتب هنا" autofocus />
+          <input type="text" id="txtInput" placeholder="  .....اكتب هنا  "  autofocus />
         </div>
         <div class="send">
           <!-- <img src="resources/_images/send.svg" alt="send" /> -->

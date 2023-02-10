@@ -2,7 +2,7 @@ body {
    
   /* background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='40' height='70' patternTransform='scale(2) rotate(180)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(0,0%,100%,1)'/><path d='M-10 5l20 10L30 5l20 10'  stroke-linecap='square' stroke-width='0.5' stroke='hsla(0, 0%, 6%, 1)' fill='none'/><path d='M-10 25l20 10 20-10 20 10'  stroke-linecap='square' stroke-width='0.5' stroke='hsla(189, 100%, 25%, 0.5019607843137255)' fill='none'/><path d='M-10 45l20 10 20-10 20 10'  stroke-linecap='square' stroke-width='0.5' stroke='hsla(0, 0%, 47%, 0.5882352941176471)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,-320)' fill='url(%23a)'/></svg>");
   background-color:#505050; */
-  background-color:#202020;
+  background-color:#f2f2f2 ;
     /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
     font-family: 'Nunito', sans-serif;
 } 
@@ -12,9 +12,10 @@ body {
   
 }
 #val{
+  text-align: right;
   /* background-color: #303030; */
   background-color: #838383;
-  border-radius: 32px  ;
+   border-radius: 10px  ; 
   padding: 50px;
   margin: 15px;
 }
@@ -124,7 +125,7 @@ color: #fff;
   /* background-color: #78787896; */
   /* background-color: #bebdb896; */
   /* background-color: #303030; */
-  background-color: #202020;
+  background-color: #f2f2f2 ;
    padding: 20px; 
   font-family: sans-serif;
   color: #fff;
@@ -138,7 +139,7 @@ color: #fff;
 .chat-body {
  /* background-color:#bebdb896;  */
  /* background-color: #303030; */
-  background-color: #202020; 
+  background-color: #f2f2f2 ; 
 
 
 
@@ -159,7 +160,7 @@ color: #fff;
   /* background-color: #bebdb896; */
   /* background-color: #303030; */
   margin-left: 22%;
-  background-color: #202020;
+  background-color: #f2f2f2 ;
   padding: 0 60px;
   /* border-radius: 0 0 32px 32px; */
   height: 60px;
@@ -186,11 +187,12 @@ color: #fff;
   opacity: 1; /* Firefox */
 }
 #txtInput {
+  text-align: right;
   background-color: #838383;
   line-height: 30px;
   padding: 8px 10px;
   border: 2px  ;
-  border-radius: 20px ;
+   border-radius: 15px ; 
   outline: none;
   color: white;
   font-size: 1rem;
@@ -199,8 +201,9 @@ color: #fff;
 
 .chatbot-message,
 .user-message {
+direction: rtl;
 
-  border-bottom:1px inset  #262626 ;
+  border-bottom:1px inset  #e5e5e5 ;
   
   /* padding: 12px 0 0 0; */
 
@@ -212,15 +215,16 @@ color: #fff;
  padding-right: 20%;
  padding-top: 2%; 
  padding-bottom: 2%; 
- text-align: left;
+ 
  font-size: large;
- color: #fff;
+ color: black;
+ 
   /* border-radius: 10px 3px 10px 10px; */
 
 }
 
 .chatbot-message { 
-   background-color: #303030;
+   background-color: #e5e5e5  ;
   /* background: rgba(204, 204, 204, 0.808); */
   /* background: rgba(245, 245, 220, 0.733); */
   /* color: var(--light-color); */
