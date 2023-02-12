@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                     <div class="max-w-xl">
-                        {{ __("You're logged in as an admin!") }}
+
                         @include('Admin.partials.upload-adminfile-form')
                     </div>
                 </div>
@@ -21,9 +21,15 @@
                 </div> --}}
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                     <div class="max-w-xl">
-                        {{ __("You're logged in as an admin!") }}
+
                         @include('Admin.partials.show-adminfile')
                     </div>
+                </div>
+            </div>
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div class="max-w-xl">
+
+                    @include('Admin.partials.year-form')
                 </div>
             </div>
         </div>

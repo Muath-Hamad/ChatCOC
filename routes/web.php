@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin', [AdminfileController::class, 'create'])->name('adminfile.create');
     Route::delete('/admin/file/{file}', [AdminfileController::class, 'destroy'])->name('adminfile.destroy');
     Route::delete('/profile/file/{file}', [UserfileController::class, 'destroy'])->name('Userfile.destroy');
+    Route::post('/admin', [adminpageController::class, 'update'])->name('adminpage.update');
 
 });
 

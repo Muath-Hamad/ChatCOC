@@ -21,4 +21,17 @@ class adminpageController extends Controller
             abort("403");
         }
     }
+    public function update(Request $request){
+
+
+
+        foreach ($request->all() as $inputName => $inputValue) {
+            // Do something with the input
+
+        }
+
+
+
+
+    }
 }
