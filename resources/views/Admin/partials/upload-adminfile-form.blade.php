@@ -1,11 +1,12 @@
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Chatbot Files manager') }}
+           مدير ملفات chatbot 
         </h2>
 
         <p class="mt-1 text-sm text-gray-600">
-            {{ __("Upload College schedule .pdf file to feed the Chatbot") }}
+              ارفع ملف الكلية بصيغة (.pdf) لتغذية ال(chatbot)
+            <!-- {{ __("Upload College schedule .pdf file to feed the Chatbot") }} -->
         </p>
     </header>
 
@@ -30,7 +31,7 @@
             @enderror
         </div>
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-primary-button>حفظ</x-primary-button>
         </div>
     </form>
 </section>

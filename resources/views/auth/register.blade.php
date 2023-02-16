@@ -1,4 +1,4 @@
-@section('title' , _('Register'))
+@section('title' , trans('in.Register'))
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf

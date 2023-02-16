@@ -28,7 +28,7 @@
 <div class="card">
     <div class="card-header">
         <div class="row">
-            <div class="col col-md-6"> <b>Chatbot files</b></div>
+            <div class="col col-md-6"> <b> ملفات chabot</b></div>
             <div class="col col-md-6">
                 {{-- <a href="{{ route('adminfile.create') }}" class="btn btn-success btn-sm float-end">New</a> --}}
                 {{-- <a href="{{ route('adminfile.store') }}" class="btn btn-success btn-sm float-end">New</a> --}}
@@ -38,9 +38,9 @@
     <div class="card-body">
         <table class="table table-bordered">
             <tr>
-                <th>Name</th>
-                <th>Uploaded at</th>
-                <th>uploaded by</th>
+                <th>الاسم </th>
+                <th>تم الرفع في</th>
+                <th>تم الرفع بواسطة</th>
             </tr>
             @if (count($adminfiles) > 0)
 
@@ -53,7 +53,7 @@
                         <form method="post" action="{{ route('adminfile.destroy', ['file' => $row->id]) }}">
                         @csrf
                         @method('DELETE')
-                        <input type="submit" class="btn btn-danger btn-sm" value="Delete"/>
+                        <input type="submit" class="btn btn-danger btn-sm" value="حذف"/>
                         </form>
                     </td>
 
@@ -61,7 +61,7 @@
             @endforeach
             @else
                 <tr>
-                    <td colspan="5" class="text-center">No files uploaded</td>
+                    <td colspan="5" class="text-center">لا يوجد ملفات </td>
                 </tr>
             @endif
         </table>
