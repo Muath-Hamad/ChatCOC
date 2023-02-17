@@ -12,6 +12,7 @@ body {
   
 }
 #val{
+  font-family: 'DroidArabicKufiRegular';
   text-align: right;
   /* background-color: #303030; */
   background-color: #838383;
@@ -110,9 +111,13 @@ color: #fff;
 .sidenav {padding-top: 15px;}
 .sidenav a {font-size: 18px;}
 }
-
+@media only screen and (max-width: 600px) {
+  .conn{
+    height: 70vh;
+  }
+}
 .conn{
-  height: 100vh;
+  height: 95vh;
 }
 
 
@@ -221,7 +226,7 @@ direction: rtl;
  padding-right: 20%;
  padding-top: 2%; 
  padding-bottom: 2%; 
- 
+ font-family: 'DroidArabicKufiRegular';
  font-size: large;
  color: black;
  

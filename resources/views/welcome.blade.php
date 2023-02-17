@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
         <title>QUC | الصفحة الرئيسية</title>
 
          <!-- Bootstrap for "rtl" -->
@@ -12,7 +12,7 @@
 
 
         <!-- Fonts -->
-        <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/droid-arabic-kufi" type="text/css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
         <!-- Styles -->
@@ -66,13 +66,15 @@
       <!-- {{trans('in.hi')}} -->
       <div class="help">
         <div>
-<div id="elem" class="row">
-  <div id="val" class="col-lg-3 col-md-12">{{trans('in.hi')}}</div>
-  <div id="val" class="col-lg-3 col-md-12" >{{trans('in.hi')}}</div>
-  <div id="val" class="col-lg-3 col-md-12">{{trans('in.hi')}}</div>
-  <div id="val" class="col-lg-3 col-md-12">{{trans('in.hi')}}</div>
-  <div id="val" class="col-lg-3 col-md-12">{{trans('in.hi')}}</div>
-  <div id="val" class="col-lg-3 col-md-12">{{trans('in.hi')}}</div>
+<div id="elem" class="pt-5 row" dir=rtl>
+  <div id="val" class="col-lg-3 col-md-12">   <div>يستقبل الأسئلة من   المستخدم باللغة العربية</div> يمكن السؤال عن اي مادة عن طريق ذكر رمز المادة <div>(cs181,cs 182)</div> </div>
+  <div id="val" class="col-lg-3 col-md-12" >يمكن للمستخدم أن يسأل أسئلة تتعلق عن سجله الأكاديمي وذلك عن طريق رفع ملف السجل الأكاديمي و السؤال عنه</div>
+  <div id="val" class="col-lg-3 col-md-12" > أمثلة على الاسئله الممكن طرحه:
+    <div>من محاضر math215</div><div>متى اختبار cs181</div><div>متى محاضرة it315</div><div>هل يمكن تسجيل cs432</div><div>متى تبدأ الاختبارات</div></div>
+  <!-- <div id="val" class="col-lg-3 col-md-12"></div>
+  <div id="val" class="col-lg-3 col-md-12"></div>
+  <div id="val" class="col-lg-3 col-md-12">
+  </div> -->
   </div>
       </div>
     </div>
