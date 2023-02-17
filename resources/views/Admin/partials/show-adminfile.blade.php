@@ -53,7 +53,7 @@
                         <form method="post" action="{{ route('adminfile.destroy', ['file' => $row->id]) }}">
                         @csrf
                         @method('DELETE')
-                        <input type="submit" class="btn btn-danger btn-sm" value="حذف"/>
+                        <input type="submit" class="mt-4 btn btn-outline-danger" value="حذف"/>
                         </form>
                     </td>
 
